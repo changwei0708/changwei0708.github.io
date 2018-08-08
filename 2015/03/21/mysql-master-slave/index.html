@@ -79,13 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="fz00x0zf&#39;s blog">
-<meta property="og:url" content="http://changwei0708.github.io/index.html">
+<meta name="description" content="什么是MySQL主从复制简单来说就是保证主SQL（Master）和从SQL（Slave）的数据是一致性的，向Master插入数据后，Slave会自动从Master把修改的数据同步过来（有一定的延迟），通过这种方式来保证数据的一致性，就是主从复制 MySQL主从能解决什么问题一、高可用因为数据都是相同的，所以当Master挂掉后，可以指定一台Slave充当Master继续保证服务运行，因为数据是一致">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Mysql binglog的主从同步搭建">
+<meta property="og:url" content="http://changwei0708.github.io/2015/03/21/mysql-master-slave/index.html">
 <meta property="og:site_name" content="fz00x0zf&#39;s blog">
+<meta property="og:description" content="什么是MySQL主从复制简单来说就是保证主SQL（Master）和从SQL（Slave）的数据是一致性的，向Master插入数据后，Slave会自动从Master把修改的数据同步过来（有一定的延迟），通过这种方式来保证数据的一致性，就是主从复制 MySQL主从能解决什么问题一、高可用因为数据都是相同的，所以当Master挂掉后，可以指定一台Slave充当Master继续保证服务运行，因为数据是一致">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-08T15:21:52.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="fz00x0zf&#39;s blog">
+<meta name="twitter:title" content="基于Mysql binglog的主从同步搭建">
+<meta name="twitter:description" content="什么是MySQL主从复制简单来说就是保证主SQL（Master）和从SQL（Slave）的数据是一致性的，向Master插入数据后，Slave会自动从Master把修改的数据同步过来（有一定的延迟），通过这种方式来保证数据的一致性，就是主从复制 MySQL主从能解决什么问题一、高可用因为数据都是相同的，所以当Master挂掉后，可以指定一台Slave充当Master继续保证服务运行，因为数据是一致">
 
 
 
@@ -115,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://changwei0708.github.io/"/>
+  <link rel="canonical" href="http://changwei0708.github.io/2015/03/21/mysql-master-slave/"/>
 
 
 
 
 
-  <title>fz00x0zf's blog</title>
+  <title>基于Mysql binglog的主从同步搭建 | fz00x0zf's blog</title>
   
 
 
@@ -140,8 +144,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -214,504 +217,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://changwei0708.github.io/2016/08/07/jvm crash log/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="luchangwei">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="fz00x0zf's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/08/07/jvm crash log/" itemprop="url">jvm crash log</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-07T13:37:36+08:00">
-                2016-08-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://changwei0708.github.io/2016/01/07/tools/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="luchangwei">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="fz00x0zf's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/01/07/tools/" itemprop="url">tools</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-01-07T16:12:18+08:00">
-                2016-01-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://changwei0708.github.io/2015/08/07/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="luchangwei">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="fz00x0zf's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/08/07/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-08-07T13:37:36+08:00">
-                2015-08-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://changwei0708.github.io/2015/08/07/test/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="luchangwei">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="fz00x0zf's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/08/07/test/" itemprop="url">test</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-08-07T13:37:36+08:00">
-                2015-08-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>first test</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
 
   
 
@@ -741,9 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/03/21/mysql-master-slave/" itemprop="url">基于Mysql binglog的主从同步搭建</a></h1>
+          <h1 class="post-title" itemprop="name headline">基于Mysql binglog的主从同步搭建</h1>
         
 
         <div class="post-meta">
@@ -793,9 +299,7 @@
       
 
       
-        
-          
-            <h2 id="什么是MySQL主从复制"><a href="#什么是MySQL主从复制" class="headerlink" title="什么是MySQL主从复制"></a>什么是MySQL主从复制</h2><p>简单来说就是保证主SQL（Master）和从SQL（Slave）的数据是一致性的，向Master插入数据后，Slave会自动从Master把修改的数据同步过来（有一定的延迟），通过这种方式来保证数据的一致性，就是主从复制</p>
+        <h2 id="什么是MySQL主从复制"><a href="#什么是MySQL主从复制" class="headerlink" title="什么是MySQL主从复制"></a>什么是MySQL主从复制</h2><p>简单来说就是保证主SQL（Master）和从SQL（Slave）的数据是一致性的，向Master插入数据后，Slave会自动从Master把修改的数据同步过来（有一定的延迟），通过这种方式来保证数据的一致性，就是主从复制</p>
 <h2 id="MySQL主从能解决什么问题"><a href="#MySQL主从能解决什么问题" class="headerlink" title="MySQL主从能解决什么问题"></a>MySQL主从能解决什么问题</h2><h3 id="一、高可用"><a href="#一、高可用" class="headerlink" title="一、高可用"></a>一、高可用</h3><p>因为数据都是相同的，所以当Master挂掉后，可以指定一台Slave充当Master继续保证服务运行，因为数据是一致性的（如果当插入Master就挂掉，可能不一致，因为同步也需要时间），当然这种配置不是简单的把一台Slave充当Master，毕竟还要考虑后续的Salve同步Master，当然本文并不是将高可用的配置，所以这里就不多讲了</p>
 <h3 id="二、负载均衡"><a href="#二、负载均衡" class="headerlink" title="二、负载均衡"></a>二、负载均衡</h3><p>因为读写分离也算是负载均衡的一种，所以就不单独写了，因为一般都是有多台Slave的，所以可以将读操作指定到Slave服务器上（需要代码控制），然后再用负载均衡来选择那台Slave来提供服务，同时也可以吧一些大量计算的查询指定到某台Slave，这样就不会影响Master的写入以及其他查询</p>
 <h3 id="三、数据备份"><a href="#三、数据备份" class="headerlink" title="三、数据备份"></a>三、数据备份</h3><p>一般我们都会做数据备份，可能是写定时任务，一些特殊行业可能还需要手动备份，有些行业要求备份和原数据不能在同一个地方，所以主从就能很好的解决这个问题，不仅备份及时，而且还可以多地备份，保证数据的安全</p>
@@ -829,8 +333,6 @@
 <h4 id="五、开启主从同步"><a href="#五、开启主从同步" class="headerlink" title="五、开启主从同步"></a>五、开启主从同步</h4><h4 id="在Slave中执行命令-1"><a href="#在Slave中执行命令-1" class="headerlink" title="在Slave中执行命令"></a>在Slave中执行命令</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start slave;</span><br></pre></td></tr></table></figure>
 <p>查询查看主从同步状态，会发现SlaveIORunning和SlaveSQLRunning是Yes了，表明开启成功</p>
 
-          
-        
       
     </div>
     
@@ -847,12 +349,28 @@
       
 
       
+      
+      
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/07/test/" rel="prev" title="test">
+                test <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
 
       
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -862,10 +380,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -873,6 +392,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -893,8 +416,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -936,6 +468,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是MySQL主从复制"><span class="nav-number">1.</span> <span class="nav-text">什么是MySQL主从复制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL主从能解决什么问题"><span class="nav-number">2.</span> <span class="nav-text">MySQL主从能解决什么问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、高可用"><span class="nav-number">2.1.</span> <span class="nav-text">一、高可用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、负载均衡"><span class="nav-number">2.2.</span> <span class="nav-text">二、负载均衡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、数据备份"><span class="nav-number">2.3.</span> <span class="nav-text">三、数据备份</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、业务模块化"><span class="nav-number">2.4.</span> <span class="nav-text">四、业务模块化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、高扩展（硬件扩展）"><span class="nav-number">2.5.</span> <span class="nav-text">五、高扩展（硬件扩展）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、scale-up"><span class="nav-number">2.5.1.</span> <span class="nav-text">1、scale-up</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、scale-out"><span class="nav-number">2.5.2.</span> <span class="nav-text">2、scale-out</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主从复制的缺点"><span class="nav-number">3.</span> <span class="nav-text">主从复制的缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、成本增加"><span class="nav-number">3.1.</span> <span class="nav-text">一、成本增加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、数据延迟"><span class="nav-number">3.2.</span> <span class="nav-text">二、数据延迟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、写入更慢"><span class="nav-number">3.3.</span> <span class="nav-text">三、写入更慢</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复制方式"><span class="nav-number">4.</span> <span class="nav-text">复制方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复制原理"><span class="nav-number">5.</span> <span class="nav-text">复制原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#要求"><span class="nav-number">5.1.</span> <span class="nav-text">要求</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体配置"><span class="nav-number">6.</span> <span class="nav-text">具体配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#硬件需求"><span class="nav-number">6.1.</span> <span class="nav-text">硬件需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置Master"><span class="nav-number">6.2.</span> <span class="nav-text">配置Master</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、安装数据库"><span class="nav-number">6.2.1.</span> <span class="nav-text">一、安装数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、配置my-cnf"><span class="nav-number">6.2.2.</span> <span class="nav-text">二、配置my.cnf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置完成后重启mysql"><span class="nav-number">6.2.3.</span> <span class="nav-text">配置完成后重启mysql</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于复制过滤"><span class="nav-number">6.3.</span> <span class="nav-text">关于复制过滤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#复制过滤可以让你只复制服务器中的一部分数据，有两种复制过滤："><span class="nav-number">6.3.1.</span> <span class="nav-text">复制过滤可以让你只复制服务器中的一部分数据，有两种复制过滤：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复制类型"><span class="nav-number">6.3.2.</span> <span class="nav-text">复制类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1、基于语句的复制"><span class="nav-number">6.3.3.</span> <span class="nav-text">1、基于语句的复制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、基于行的复制"><span class="nav-number">6.3.4.</span> <span class="nav-text">2、基于行的复制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、混合类型的复制"><span class="nav-number">6.3.5.</span> <span class="nav-text">3、混合类型的复制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、创建数据同步用户"><span class="nav-number">6.4.</span> <span class="nav-text">三、创建数据同步用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置Slave"><span class="nav-number">6.5.</span> <span class="nav-text">配置Slave</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、安装数据库-1"><span class="nav-number">6.5.1.</span> <span class="nav-text">一、安装数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、配置my-cnf-1"><span class="nav-number">6.5.2.</span> <span class="nav-text">二、配置my.cnf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#完成Master和Slave链接"><span class="nav-number">6.5.3.</span> <span class="nav-text">完成Master和Slave链接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一、初始化数据"><span class="nav-number">6.5.4.</span> <span class="nav-text">一、初始化数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、查询Master状态"><span class="nav-number">6.5.5.</span> <span class="nav-text">二、查询Master状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、Slave中设置Master信息"><span class="nav-number">6.5.6.</span> <span class="nav-text">三、Slave中设置Master信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、查看主从同步状态"><span class="nav-number">6.5.7.</span> <span class="nav-text">四、查看主从同步状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在Slave中执行命令"><span class="nav-number">6.5.8.</span> <span class="nav-text">在Slave中执行命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、开启主从同步"><span class="nav-number">6.5.9.</span> <span class="nav-text">五、开启主从同步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在Slave中执行命令-1"><span class="nav-number">6.5.10.</span> <span class="nav-text">在Slave中执行命令</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1069,6 +617,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
