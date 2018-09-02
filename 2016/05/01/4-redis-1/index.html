@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="缓存是系统到达一定级别之后的必经之路，作为目前被广泛使用的NoSQL数据库之一，Redis的在系统日常的用途十分丰富。 例如:1.记录帖子的点赞数、评论数和点击数 (hash)。2.记录用户的帖子 ID 列表 (排序)，便于快速显示用户的帖子列表 (zset)。3.记录帖子的标题、摘要、作者和封面信息，用于列表页展示 (hash)。4.记录帖子的点赞用户 ID 列表，评论 ID 列表，用于显示和去">
+<meta name="description" content="Redis 是互联网技术领域使用最为广泛的存储中间件，它是「Remote Dictionary Service」的首字母缩写，也就是「远程字典服务」。Redis 以其超高的性能、完美的文档、简洁易懂的源码和丰富的客户端库支持在开源中间件领域广受好评。 例如:1.记录帖子的点赞数、评论数和点击数 (hash)。2.记录用户的帖子 ID 列表 (排序)，便于快速显示用户的帖子列表 (zset)。3.记">
 <meta name="keywords" content="Redis,NoSQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis系列之应用范围">
 <meta property="og:url" content="http://changwei0708.github.io/2016/05/01/4-redis-1/index.html">
 <meta property="og:site_name" content="fz00x0zf&#39;s blog">
-<meta property="og:description" content="缓存是系统到达一定级别之后的必经之路，作为目前被广泛使用的NoSQL数据库之一，Redis的在系统日常的用途十分丰富。 例如:1.记录帖子的点赞数、评论数和点击数 (hash)。2.记录用户的帖子 ID 列表 (排序)，便于快速显示用户的帖子列表 (zset)。3.记录帖子的标题、摘要、作者和封面信息，用于列表页展示 (hash)。4.记录帖子的点赞用户 ID 列表，评论 ID 列表，用于显示和去">
+<meta property="og:description" content="Redis 是互联网技术领域使用最为广泛的存储中间件，它是「Remote Dictionary Service」的首字母缩写，也就是「远程字典服务」。Redis 以其超高的性能、完美的文档、简洁易懂的源码和丰富的客户端库支持在开源中间件领域广受好评。 例如:1.记录帖子的点赞数、评论数和点击数 (hash)。2.记录用户的帖子 ID 列表 (排序)，便于快速显示用户的帖子列表 (zset)。3.记">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-02T16:32:13.000Z">
+<meta property="og:updated_time" content="2018-09-02T16:35:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis系列之应用范围">
-<meta name="twitter:description" content="缓存是系统到达一定级别之后的必经之路，作为目前被广泛使用的NoSQL数据库之一，Redis的在系统日常的用途十分丰富。 例如:1.记录帖子的点赞数、评论数和点击数 (hash)。2.记录用户的帖子 ID 列表 (排序)，便于快速显示用户的帖子列表 (zset)。3.记录帖子的标题、摘要、作者和封面信息，用于列表页展示 (hash)。4.记录帖子的点赞用户 ID 列表，评论 ID 列表，用于显示和去">
+<meta name="twitter:description" content="Redis 是互联网技术领域使用最为广泛的存储中间件，它是「Remote Dictionary Service」的首字母缩写，也就是「远程字典服务」。Redis 以其超高的性能、完美的文档、简洁易懂的源码和丰富的客户端库支持在开源中间件领域广受好评。 例如:1.记录帖子的点赞数、评论数和点击数 (hash)。2.记录用户的帖子 ID 列表 (排序)，便于快速显示用户的帖子列表 (zset)。3.记">
 
 
 
@@ -363,7 +363,7 @@
       
 
       
-        <p>缓存是系统到达一定级别之后的必经之路，作为目前被广泛使用的NoSQL数据库之一，Redis的在系统日常的用途十分丰富。</p>
+        <p>Redis 是互联网技术领域使用最为广泛的存储中间件，它是「Remote Dictionary Service」的首字母缩写，也就是「远程字典服务」。Redis 以其超高的性能、完美的文档、简洁易懂的源码和丰富的客户端库支持在开源中间件领域广受好评。</p>
 <p>例如:<br>1.记录帖子的点赞数、评论数和点击数 (hash)。<br>2.记录用户的帖子 ID 列表 (排序)，便于快速显示用户的帖子列表 (zset)。<br>3.记录帖子的标题、摘要、作者和封面信息，用于列表页展示 (hash)。<br>4.记录帖子的点赞用户 ID 列表，评论 ID 列表，用于显示和去重计数 (zset)。<br>5.缓存近期热帖内容 (帖子内容空间占用比较大)，减少数据库压力 (hash)。<br>6.记录帖子的相关文章 ID，根据内容推荐相关帖子 (list)。<br>7.如果帖子 ID 是整数自增的，可以使用 Redis 来分配帖子 ID(计数器)。<br>8.收藏集和帖子之间的关系 (zset)。<br>9.记录热榜帖子 ID 列表，总热榜和分类热榜 (zset)。<br>10.缓存用户行为历史，进行恶意行为过滤 (zset,hash)。</p>
 <p>当然，实际情况下需求可能也没这么多，因为在请求压力不大的情况下，很多数据都是可以直接从数据库中查询的。但请求压力一大，以前通过数据库直接存取的数据则必须要挪到缓存里来。</p>
 
