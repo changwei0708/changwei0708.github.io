@@ -269,6 +269,187 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://changwei0708.github.io/2018/01/21/2018/linux-elasticsearch/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="luchangwei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fz00x0zf's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/21/2018/linux-elasticsearch/" itemprop="url">Linux环境部署Elasticsearch 6.x和常见问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-21T21:13:02+08:00">
+                2018-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ES/" itemprop="url" rel="index">
+                    <span itemprop="name">ES</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ES/Elasticsearch/" itemprop="url" rel="index">
+                    <span itemprop="name">Elasticsearch</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>Elasticsearch（ES）是一个基于Lucene构建的开源、分布式、RESTful接口的全文搜索引擎。 Elasticsearch还是一个分布式文档数据库，其中每个字段均可被索引，而且每个字段的数据均可被搜索，ES能够横向扩展至数以百计的服务器存储以及处理PB级的数据。</p>
+<p>本文内容基于Elastic 技术栈6.x版本；</p>
+<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># lasticsearch-6-3-2</span><br><span class="line"></span><br><span class="line">wget https://www.elastic.co/cn/downloads/past-releases/elasticsearch-6-3-2</span><br><span class="line"></span><br><span class="line"># or</span><br><span class="line">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.3.2.tar.gz</span><br></pre></td></tr></table></figure>
+<p>下载到指定目录~/path/，解压<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf elasticsearch-6.3.2.tar.gz</span><br></pre></td></tr></table></figure></p>
+<p>由于elasticsearch 不允许使用root用户启动<br>创建一个用于启动elasticsearch 的用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useradd  elastic </span><br><span class="line">passwd  elastic</span><br></pre></td></tr></table></figure></p>
+<p>输入密码，并确认，完成特定用户创建</p>
+<p>并为该用户授权elasticsearch相关目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown -R elastic:elastic elasticsearch*</span><br></pre></td></tr></table></figure></p>
+<p>切换到用户elastic ，创建elasticsearch目录软连接指向elastic用户的根目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~</span><br><span class="line">ln -s /path/to/elasticsearch ./elasticsearch</span><br></pre></td></tr></table></figure></p>
+<p>进入该目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ./elasticsearch</span><br></pre></td></tr></table></figure></p>
+<p>执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/elasticsearch</span><br></pre></td></tr></table></figure></p>
+<p>启动elasticsearch</p>
+<p>后台启动 (daemonize)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/elasticsearch  -d</span><br></pre></td></tr></table></figure></p>
+<h4 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h4><p>启动错误提示1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ERROR: [4] bootstrap checks failed</span><br><span class="line">[1]: max file descriptors [4096] for elasticsearch process is too low, increase to at least [65536]</span><br><span class="line">[2]: max number of threads [1024] for user [elastic] is too low, increase to at least [4096]</span><br><span class="line">[3]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]</span><br><span class="line">[4]: system call filters failed to install; check the logs and fix your configuration or disable system call filters at your own risk</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[1]: max file descriptors [4096] for elasticsearch process is too low, increase to at least [65536]</span><br><span class="line"></span><br><span class="line">Make sure to increase the limit on the number of open files descriptors for the user running Elasticsearch to 65,536 or higher. For the .zip and .tar.gz packages, set ulimit -n 65536 as root before starting Elasticsearch, or set nofile to 65536 in /etc/security/limits.conf .</span><br></pre></td></tr></table></figure>
+<p>解决：切换到root用户，编辑limits.conf 添加相关配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/security/limits.conf</span><br></pre></td></tr></table></figure></p>
+<p>添加如下内容:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">* soft nofile 65536</span><br><span class="line">* hard nofile 131072</span><br><span class="line">* soft nproc 2048</span><br><span class="line">* hard nproc 4096</span><br></pre></td></tr></table></figure></p>
+<p>启动错误提示2：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[2]: max number of threads [1024] for user [elastic] is too low, increase to at least [4096]</span><br></pre></td></tr></table></figure></p>
+<p>对于第二条错误同意需要切换到root用户，进入limits.d目录下修改配置文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/security/limits.d/90-nproc.conf</span><br></pre></td></tr></table></figure></p>
+<p>修改如下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* soft nproc 1024</span><br></pre></td></tr></table></figure></p>
+<p>#修改为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* soft nproc 4096</span><br></pre></td></tr></table></figure></p>
+<p>错误提示3<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[3]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]</span><br></pre></td></tr></table></figure></p>
+<p>第三条错误需要切换到root用户修改配置sysctl.conf<br>vi /etc/sysctl.conf </p>
+<p>添加下面配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vm.max_map_count=655360</span><br></pre></td></tr></table></figure></p>
+<p>并执行命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl -p</span><br></pre></td></tr></table></figure></p>
+<p>错误提示4:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[4]: system call filters failed to install; check the logs and fix your configuration or disable system call filters at your own risk</span><br></pre></td></tr></table></figure></p>
+<p>原因：<br>这是在因为Centos6不支持SecComp，而ES 6.x默认bootstrap.system_call_filter为true进行检测，所以导致检测失败，失败后直接导致ES不能启动。</p>
+<p>解决：<br>在elasticsearch.yml中配置bootstrap.system_call_filter为false，注意要在Memory下面:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bootstrap.memory_lock: false</span><br><span class="line">bootstrap.system_call_filter: false</span><br></pre></td></tr></table></figure></p>
+<p>操作完成，现在所有的机器都能访问Linux服务器的HTTP服务了。</p>
+<p>监控健康状况<br>http://[es_host]:9200/_cat/health?v<br>监控节点情况<br>http://[es_host]:9200/_cat/nodes?v<br>监控索引情况<br>http://[es_host]:9200/_cat/indices?v</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://changwei0708.github.io/2016/05/01/4-redis-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -550,6 +731,148 @@
 <h4 id="四、查看主从同步状态"><a href="#四、查看主从同步状态" class="headerlink" title="四、查看主从同步状态"></a>四、查看主从同步状态</h4><h4 id="在Slave中执行命令"><a href="#在Slave中执行命令" class="headerlink" title="在Slave中执行命令"></a>在Slave中执行命令</h4><p>show slave status;<br>可看到SlaveIOState为空， SlaveIORunning和SlaveSQLRunning是No，表明Slave还没有开始复制过程。相反SlaveIORunning和SlaveSQLRunning是Yes表明已经开始工作了</p>
 <h4 id="五、开启主从同步"><a href="#五、开启主从同步" class="headerlink" title="五、开启主从同步"></a>五、开启主从同步</h4><h4 id="在Slave中执行命令-1"><a href="#在Slave中执行命令-1" class="headerlink" title="在Slave中执行命令"></a>在Slave中执行命令</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start slave;</span><br></pre></td></tr></table></figure>
 <p>查询查看主从同步状态，会发现SlaveIORunning和SlaveSQLRunning是Yes了，表明开启成功</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://changwei0708.github.io/2015/02/21/mysql-remove-data/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="luchangwei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fz00x0zf's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/02/21/mysql-remove-data/" itemprop="url">基于Mysql特性对删除大表数据的一些建议</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-02-21T20:13:02+08:00">
+                2015-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">Mysql</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>生产环境，往往需要更新/删除大量的数据，由于很可能消耗太多的IO资源，对于生产繁忙的系统，需要小心，以避免对生产环境造成影响。<br>删除大量数据还有一些副作用，比如主从延时、数据文件无法收缩、锁表等。<br>以下是一些要指引和规则：<br>1、批量删除，这样往往可以工作得更快，你可能需要在每次批量删除前sleep一段时间，控制删除的频率，这样的目的是减少对生产系统的IO冲击，把符合平均分布，避免从库滞后太多；<br>2、可以考虑分区表技术，我很少用分区表，但删除一个分区，显然比删除大量数据简单方便的多，这也是分区表清理/归档数据的优势所在；<br>3、按照主键的序列分批分批，或者基于时间分批分批，你总可以找到一种方式批量删除，如果实在没有批量删除的方式，可能你的表结构设计得不好；<br>4、基于硬件的性能，每批删除的记录数，可以选择几百到几千到几万的数据量，但不要太大，MySQL很难同时处理好大事务和随机小事务；<br>5、如果要删除大部分数据，那么可以考虑的方式是，创建一个新表，insert要保留的数据，然后切换表；<br>6、对于大表(InnoDB)删除大量数据，如果是一个很大的事务，中止删除数据的操作，可能需要几倍的时间用于回滚，导致严重的IO瓶颈，而批量删除可以让我们的回滚恢复得快得多。<br>7、需要留意空间的释放，选择独立表空间会更有利于释放空间。</p>
 
           
         
@@ -903,7 +1226,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -914,7 +1237,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -925,7 +1248,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

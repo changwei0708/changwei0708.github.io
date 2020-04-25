@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Mysql,Database," />
 
 
 
@@ -79,13 +79,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="fz00x0zf&#39;s blog">
-<meta property="og:url" content="http://changwei0708.github.io/tags/slave/index.html">
+<meta name="description" content="生产环境，往往需要更新/删除大量的数据，由于很可能消耗太多的IO资源，对于生产繁忙的系统，需要小心，以避免对生产环境造成影响。删除大量数据还有一些副作用，比如主从延时、数据文件无法收缩、锁表等。以下是一些要指引和规则：1、批量删除，这样往往可以工作得更快，你可能需要在每次批量删除前sleep一段时间，控制删除的频率，这样的目的是减少对生产系统的IO冲击，把符合平均分布，避免从库滞后太多；2、可以考">
+<meta name="keywords" content="Mysql,Database">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Mysql特性对删除大表数据的一些建议">
+<meta property="og:url" content="http://changwei0708.github.io/2015/02/21/mysql-remove-data/index.html">
 <meta property="og:site_name" content="fz00x0zf&#39;s blog">
+<meta property="og:description" content="生产环境，往往需要更新/删除大量的数据，由于很可能消耗太多的IO资源，对于生产繁忙的系统，需要小心，以避免对生产环境造成影响。删除大量数据还有一些副作用，比如主从延时、数据文件无法收缩、锁表等。以下是一些要指引和规则：1、批量删除，这样往往可以工作得更快，你可能需要在每次批量删除前sleep一段时间，控制删除的频率，这样的目的是减少对生产系统的IO冲击，把符合平均分布，避免从库滞后太多；2、可以考">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-04-25T05:26:12.759Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="fz00x0zf&#39;s blog">
+<meta name="twitter:title" content="基于Mysql特性对删除大表数据的一些建议">
+<meta name="twitter:description" content="生产环境，往往需要更新/删除大量的数据，由于很可能消耗太多的IO资源，对于生产繁忙的系统，需要小心，以避免对生产环境造成影响。删除大量数据还有一些副作用，比如主从延时、数据文件无法收缩、锁表等。以下是一些要指引和规则：1、批量删除，这样往往可以工作得更快，你可能需要在每次批量删除前sleep一段时间，控制删除的频率，这样的目的是减少对生产系统的IO冲击，把符合平均分布，避免从库滞后太多；2、可以考">
 
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://changwei0708.github.io/tags/slave/"/>
+  <link rel="canonical" href="http://changwei0708.github.io/2015/02/21/mysql-remove-data/"/>
 
 
 
 
 
-  <title>Tag: slave | fz00x0zf's blog</title>
+  <title>基于Mysql特性对删除大表数据的一些建议 | fz00x0zf's blog</title>
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -254,54 +259,175 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>slave<small>Tag</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://changwei0708.github.io/2015/02/21/mysql-remove-data/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="luchangwei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fz00x0zf's blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2015/03/21/mysql-master-slave/" itemprop="url">
-              
-                <span itemprop="name">基于Mysql binglog的主从同步搭建</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">基于Mysql特性对删除大表数据的一些建议</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2015-03-21T23:13:02+08:00"
-              content="2015-03-21" >
-          03-21
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-02-21T20:13:02+08:00">
+                2015-02-21
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">Mysql</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>生产环境，往往需要更新/删除大量的数据，由于很可能消耗太多的IO资源，对于生产繁忙的系统，需要小心，以避免对生产环境造成影响。<br>删除大量数据还有一些副作用，比如主从延时、数据文件无法收缩、锁表等。<br>以下是一些要指引和规则：<br>1、批量删除，这样往往可以工作得更快，你可能需要在每次批量删除前sleep一段时间，控制删除的频率，这样的目的是减少对生产系统的IO冲击，把符合平均分布，避免从库滞后太多；<br>2、可以考虑分区表技术，我很少用分区表，但删除一个分区，显然比删除大量数据简单方便的多，这也是分区表清理/归档数据的优势所在；<br>3、按照主键的序列分批分批，或者基于时间分批分批，你总可以找到一种方式批量删除，如果实在没有批量删除的方式，可能你的表结构设计得不好；<br>4、基于硬件的性能，每批删除的记录数，可以选择几百到几千到几万的数据量，但不要太大，MySQL很难同时处理好大事务和随机小事务；<br>5、如果要删除大部分数据，那么可以考虑的方式是，创建一个新表，insert要保留的数据，然后切换表；<br>6、对于大表(InnoDB)删除大量数据，如果是一个很大的事务，中止删除数据的操作，可能需要几倍的时间用于回滚，导致严重的IO瓶颈，而批量删除可以让我们的回滚恢复得快得多。<br>7、需要留意空间的释放，选择独立表空间会更有利于释放空间。</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Mysql/" rel="tag"># Mysql</a>
+          
+            <a href="/tags/Database/" rel="tag"># Database</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/02/10/3-custom-cache/" rel="next" title="Java实现简单的缓存">
+                <i class="fa fa-chevron-left"></i> Java实现简单的缓存
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/03/21/mysql-master-slave/" rel="prev" title="基于Mysql binglog的主从同步搭建">
+                基于Mysql binglog的主从同步搭建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -309,6 +435,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -523,6 +653,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
