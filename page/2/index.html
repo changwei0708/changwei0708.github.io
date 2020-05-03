@@ -269,6 +269,292 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://changwei0708.github.io/2015/02/21/mysql-remove-data/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="luchangwei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fz00x0zf's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/02/21/mysql-remove-data/" itemprop="url">基于Mysql特性对删除大表数据的一些建议</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-02-21T20:13:02+08:00">
+                2015-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">Mysql</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>生产环境，往往需要更新/删除大量的数据，由于很可能消耗太多的IO资源，对于生产繁忙的系统，需要小心，以避免对生产环境造成影响。<br>删除大量数据还有一些副作用，比如主从延时、数据文件无法收缩、锁表等。<br>以下是一些要指引和规则：<br>1、批量删除，这样往往可以工作得更快，你可能需要在每次批量删除前sleep一段时间，控制删除的频率，这样的目的是减少对生产系统的IO冲击，把符合平均分布，避免从库滞后太多；<br>2、可以考虑分区表技术，我很少用分区表，但删除一个分区，显然比删除大量数据简单方便的多，这也是分区表清理/归档数据的优势所在；<br>3、按照主键的序列分批分批，或者基于时间分批分批，你总可以找到一种方式批量删除，如果实在没有批量删除的方式，可能你的表结构设计得不好；<br>4、基于硬件的性能，每批删除的记录数，可以选择几百到几千到几万的数据量，但不要太大，MySQL很难同时处理好大事务和随机小事务；<br>5、如果要删除大部分数据，那么可以考虑的方式是，创建一个新表，insert要保留的数据，然后切换表；<br>6、对于大表(InnoDB)删除大量数据，如果是一个很大的事务，中止删除数据的操作，可能需要几倍的时间用于回滚，导致严重的IO瓶颈，而批量删除可以让我们的回滚恢复得快得多。<br>7、需要留意空间的释放，选择独立表空间会更有利于释放空间。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://changwei0708.github.io/2013/02/10/3-custom-cache/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="luchangwei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fz00x0zf's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/02/10/3-custom-cache/" itemprop="url">Java实现简单的缓存</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-02-10T00:13:48+08:00">
+                2013-02-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="通过map模拟缓存实现"><a href="#通过map模拟缓存实现" class="headerlink" title="通过map模拟缓存实现"></a>通过map模拟缓存实现</h4><h5 id="1-定义缓存包装类"><a href="#1-定义缓存包装类" class="headerlink" title="1.定义缓存包装类"></a>1.定义缓存包装类</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">public class Cache &#123;</span><br><span class="line">        private String key;//缓存ID</span><br><span class="line">        private Object value;//缓存数据</span><br><span class="line">        private long timeOut;//更新时间</span><br><span class="line">        private boolean expired; //是否终止</span><br><span class="line">        public Cache() &#123;</span><br><span class="line">                super();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public Cache(String key, Object value, long timeOut, boolean expired) &#123;</span><br><span class="line">                this.key = key;</span><br><span class="line">                this.value = value;</span><br><span class="line">                this.timeOut = timeOut;</span><br><span class="line">                this.expired = expired;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public String getKey() &#123;</span><br><span class="line">                return key;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public long getTimeOut() &#123;</span><br><span class="line">                return timeOut;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public Object getValue() &#123;</span><br><span class="line">                return value;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public void setKey(String string) &#123;</span><br><span class="line">                key = string;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public void setTimeOut(long l) &#123;</span><br><span class="line">                timeOut = l;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public void setValue(Object object) &#123;</span><br><span class="line">                value = object;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public boolean isExpired() &#123;</span><br><span class="line">                return expired;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public void setExpired(boolean b) &#123;</span><br><span class="line">                expired = b;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-定义缓存工具类"><a href="#2-定义缓存工具类" class="headerlink" title="2.定义缓存工具类"></a>2.定义缓存工具类</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br></pre></td><td class="code"><pre><span class="line">public class CacheManager &#123;</span><br><span class="line">    private static HashMap cacheMap = new HashMap();</span><br><span class="line"></span><br><span class="line">    //单实例构造方法</span><br><span class="line">    private CacheManager() &#123;</span><br><span class="line">        super();</span><br><span class="line">    &#125;</span><br><span class="line">    //获取布尔值的缓存</span><br><span class="line">    public static boolean getSimpleFlag(String key)&#123;</span><br><span class="line">        try&#123;</span><br><span class="line">            return (Boolean) cacheMap.get(key);</span><br><span class="line">        &#125;catch(NullPointerException e)&#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    public static long getServerStartdt(String key)&#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            return (Long)cacheMap.get(key);</span><br><span class="line">        &#125; catch (Exception ex) &#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //设置布尔值的缓存</span><br><span class="line">    public synchronized static boolean setSimpleFlag(String key,boolean flag)&#123;</span><br><span class="line">        if (flag &amp;&amp; getSimpleFlag(key)) &#123;//假如为真不允许被覆盖</span><br><span class="line">            return false;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            cacheMap.put(key, flag);</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    public synchronized static boolean setSimpleFlag(String key,long serverbegrundt)&#123;</span><br><span class="line">        if (cacheMap.get(key) == null) &#123;</span><br><span class="line">            cacheMap.put(key,serverbegrundt);</span><br><span class="line">            return true;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    //得到缓存。同步静态方法</span><br><span class="line">    private synchronized static Cache getCache(String key) &#123;</span><br><span class="line">        return (Cache) cacheMap.get(key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //判断是否存在一个缓存</span><br><span class="line">    private synchronized static boolean hasCache(String key) &#123;</span><br><span class="line">        return cacheMap.containsKey(key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //清除所有缓存</span><br><span class="line">    public synchronized static void clearAll() &#123;</span><br><span class="line">        cacheMap.clear();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //清除某一类特定缓存,通过遍历HASHMAP下的所有对象，来判断它的KEY与传入的TYPE是否匹配</span><br><span class="line">    public synchronized static void clearAll(String type) &#123;</span><br><span class="line">        Iterator i = cacheMap.entrySet().iterator();</span><br><span class="line">        String key;</span><br><span class="line">        ArrayList&lt;String&gt; arr = new ArrayList&lt;String&gt;();</span><br><span class="line">        try &#123;</span><br><span class="line">            while (i.hasNext()) &#123;</span><br><span class="line">                java.util.Map.Entry entry = (java.util.Map.Entry) i.next();</span><br><span class="line">                key = (String) entry.getKey();</span><br><span class="line">                if (key.startsWith(type)) &#123; //如果匹配则删除掉</span><br><span class="line">                    arr.add(key);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            for (int k = 0; k &lt; arr.size(); k++) &#123;</span><br><span class="line">                clearOnly(arr.get(k));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Exception ex) &#123;</span><br><span class="line">            ex.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //清除指定的缓存</span><br><span class="line">    public synchronized static void clearOnly(String key) &#123;</span><br><span class="line">        cacheMap.remove(key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //载入缓存</span><br><span class="line">    public synchronized static void putCache(String key, Cache obj) &#123;</span><br><span class="line">        cacheMap.put(key, obj);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //获取缓存信息</span><br><span class="line">    public static Cache getCacheInfo(String key) &#123;</span><br><span class="line"></span><br><span class="line">        if (hasCache(key)) &#123;</span><br><span class="line">            Cache cache = getCache(key);</span><br><span class="line">            if (cacheExpired(cache)) &#123; //调用判断是否终止方法</span><br><span class="line">                cache.setExpired(true);</span><br><span class="line">            &#125;</span><br><span class="line">            return cache;</span><br><span class="line">        &#125;else</span><br><span class="line">            return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //载入缓存信息</span><br><span class="line">    public static void putCacheInfo(String key, Cache obj, long dt,boolean expired) &#123;</span><br><span class="line">        Cache cache = new Cache();</span><br><span class="line">        cache.setKey(key);</span><br><span class="line">        cache.setTimeOut(dt + System.currentTimeMillis()); //设置多久后更新缓存</span><br><span class="line">        cache.setValue(obj);</span><br><span class="line">        cache.setExpired(expired); //缓存默认载入时，终止状态为FALSE</span><br><span class="line">        cacheMap.put(key, cache);</span><br><span class="line">    &#125;</span><br><span class="line">    //重写载入缓存信息方法</span><br><span class="line">    public static void putCacheInfo(String key,Cache obj,long dt)&#123;</span><br><span class="line">        Cache cache = new Cache();</span><br><span class="line">        cache.setKey(key);</span><br><span class="line">        cache.setTimeOut(dt+System.currentTimeMillis());</span><br><span class="line">        cache.setValue(obj);</span><br><span class="line">        cache.setExpired(false);</span><br><span class="line">        cacheMap.put(key,cache);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //判断缓存是否终止</span><br><span class="line">    public static boolean cacheExpired(Cache cache) &#123;</span><br><span class="line">        if (null == cache) &#123; //传入的缓存不存在</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        long nowDt = System.currentTimeMillis(); //系统当前的毫秒数</span><br><span class="line">        long cacheDt = cache.getTimeOut(); //缓存内的过期毫秒数</span><br><span class="line">        if (cacheDt &lt;= 0||cacheDt&gt;nowDt) &#123; //过期时间小于等于零时,或者过期时间大于当前时间时，则为FALSE</span><br><span class="line">            return false;</span><br><span class="line">        &#125; else &#123; //大于过期时间 即过期</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //获取缓存中的大小</span><br><span class="line">    public static int getCacheSize() &#123;</span><br><span class="line">        return cacheMap.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //获取指定的类型的大小</span><br><span class="line">    public static int getCacheSize(String type) &#123;</span><br><span class="line">        int k = 0;</span><br><span class="line">        Iterator i = cacheMap.entrySet().iterator();</span><br><span class="line">        String key;</span><br><span class="line">        try &#123;</span><br><span class="line">            while (i.hasNext()) &#123;</span><br><span class="line">                java.util.Map.Entry entry = (java.util.Map.Entry) i.next();</span><br><span class="line">                key = (String) entry.getKey();</span><br><span class="line">                if (key.indexOf(type) != -1) &#123; //如果匹配则删除掉</span><br><span class="line">                    k++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Exception ex) &#123;</span><br><span class="line">            ex.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return k;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //获取缓存对象中的所有键值名称</span><br><span class="line">    public static ArrayList&lt;String&gt; getCacheAllkey() &#123;</span><br><span class="line">        ArrayList a = new ArrayList();</span><br><span class="line">        try &#123;</span><br><span class="line">            Iterator i = cacheMap.entrySet().iterator();</span><br><span class="line">            while (i.hasNext()) &#123;</span><br><span class="line">                java.util.Map.Entry entry = (java.util.Map.Entry) i.next();</span><br><span class="line">                a.add((String) entry.getKey());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Exception ex) &#123;&#125; finally &#123;</span><br><span class="line">            return a;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //获取缓存对象中指定类型 的键值名称</span><br><span class="line">    public static ArrayList&lt;String&gt; getCacheListkey(String type) &#123;</span><br><span class="line">        ArrayList a = new ArrayList();</span><br><span class="line">        String key;</span><br><span class="line">        try &#123;</span><br><span class="line">            Iterator i = cacheMap.entrySet().iterator();</span><br><span class="line">            while (i.hasNext()) &#123;</span><br><span class="line">                java.util.Map.Entry entry = (java.util.Map.Entry) i.next();</span><br><span class="line">                key = (String) entry.getKey();</span><br><span class="line">                if (key.indexOf(type) != -1) &#123;</span><br><span class="line">                    a.add(key);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Exception ex) &#123;&#125; finally &#123;</span><br><span class="line">            return a;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="3-缓存测试类"><a href="#3-缓存测试类" class="headerlink" title="3.缓存测试类"></a>3.缓存测试类</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        System.out.println(CacheManager.getSimpleFlag(&quot;alksd&quot;));</span><br><span class="line">//        CacheManager.putCache(&quot;foot ball&quot;, new Cache());</span><br><span class="line">//        CacheManager.putCache(&quot;basket ball&quot;, new Cache());</span><br><span class="line">//        CacheManager.putCache(&quot;apple&quot;, new Cache());</span><br><span class="line">//        CacheManager.clearOnly(&quot;&quot;);</span><br><span class="line">//        Cache c = new Cache();</span><br><span class="line">//        for (int i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">//            CacheManager.putCache(&quot;&quot; + i, c);</span><br><span class="line">//        &#125;</span><br><span class="line">//        CacheManager.putCache(&quot;key1&quot;, c);</span><br><span class="line">//        CacheManager.putCache(&quot;key2&quot;, c);</span><br><span class="line">//        CacheManager.putCache(&quot;key3&quot;, c);</span><br><span class="line">//        System.out.println(&quot;清除前的大小：&quot;+CacheManager.getCacheSize());</span><br><span class="line">//        CacheManager.getCacheAllkey();</span><br><span class="line">//        CacheManager.clearAll(&quot;aaaa&quot;);</span><br><span class="line">//        System.out.println(&quot;清除后的大小：&quot;+CacheManager.getCacheSize());</span><br><span class="line">//        CacheManager.getCacheAllkey();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://changwei0708.github.io/2013/01/01/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -434,7 +720,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -445,7 +731,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -456,7 +742,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
