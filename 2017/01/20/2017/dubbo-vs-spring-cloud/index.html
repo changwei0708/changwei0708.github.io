@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="fz00x0zf&#39;s blog">
 <meta property="og:description" content="最近阿里方面低调重启Dubbo的更新，连续发布了几个更新版本，修复了大量的问题和进行框架优化，这也让业界目光又重新聚焦到了Dubbo 和 Spring Cloud 这两个开发者熟知的框架上， 首先看下Dubbo和Spring Cloud有何不同？   功能 Dubbo Spring Cloud     服务注册中心 Zookeeper Spring Cloud Netflix Eureka   服">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-05-05T01:12:53.407Z">
+<meta property="og:updated_time" content="2020-05-05T01:27:48.849Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dubbo 与 Spring Cloud">
 <meta name="twitter:description" content="最近阿里方面低调重启Dubbo的更新，连续发布了几个更新版本，修复了大量的问题和进行框架优化，这也让业界目光又重新聚焦到了Dubbo 和 Spring Cloud 这两个开发者熟知的框架上， 首先看下Dubbo和Spring Cloud有何不同？   功能 Dubbo Spring Cloud     服务注册中心 Zookeeper Spring Cloud Netflix Eureka   服">
@@ -401,8 +401,7 @@
 <tr>
 <td>断路器</td>
 <td style="text-align:center">不完善</td>
-<td style="text-align:right">Spring</td>
-<td>Cloud Netflix Hystrix</td>
+<td style="text-align:right">Spring Cloud Netflix Hystrix</td>
 </tr>
 <tr>
 <td>服务网关</td>
@@ -439,7 +438,8 @@
 <h4 id="从上图可以看出其实Dubbo的功能只是Spring-Cloud体系的一部分。"><a href="#从上图可以看出其实Dubbo的功能只是Spring-Cloud体系的一部分。" class="headerlink" title="从上图可以看出其实Dubbo的功能只是Spring Cloud体系的一部分。"></a>从上图可以看出其实Dubbo的功能只是Spring Cloud体系的一部分。</h4><blockquote>
 <p>但其实这样对比是不够公平的，首先 Dubbo 是 SOA 时代的产物，它的关注点主要在于服务的调用，流量分发、流量监控和熔断。而 Spring Cloud 诞生于微服务架构时代，考虑的是微服务治理的方方面面，另外由于依托了 Spring、Spring Boot 的优势之上，两个框架在开始目标就不一致，Dubbo 定位服务治理、Spring Cloud 是一个生态。</p>
 </blockquote>
-<h4 id="其它对比："><a href="#其它对比：" class="headerlink" title="其它对比："></a>其它对比：</h4><h4 id="dubbo由于是二进制的传输，占用带宽会更少，"><a href="#dubbo由于是二进制的传输，占用带宽会更少，" class="headerlink" title="dubbo由于是二进制的传输，占用带宽会更少，"></a>dubbo由于是二进制的传输，占用带宽会更少，</h4><h4 id="如果仅仅关注于服务治理的这个层面，Dubbo其实还优于Spring-Cloud很多："><a href="#如果仅仅关注于服务治理的这个层面，Dubbo其实还优于Spring-Cloud很多：" class="headerlink" title="如果仅仅关注于服务治理的这个层面，Dubbo其实还优于Spring Cloud很多："></a>如果仅仅关注于服务治理的这个层面，Dubbo其实还优于Spring Cloud很多：</h4><p>· Dubbo 支持更多的协议，如：rmi、hessian、http、webservice、thrift、memcached、redis 等。<br>· Dubbo 使用 RPC 协议效率更高，在极端压力测试下，Dubbo 的效率会高于 Spring Cloud 效率一倍多。<br>· Dubbo 有更强大的后台管理，Dubbo 提供的后台管理 Dubbo Admin 功能强大，提供了路由规则、动态配置、访问控制、权重调节、均衡负载等诸多强大的功能。<br>· 可以限制某个 IP 流量的访问权限，设置不同服务器分发不同的流量权重，并且支持多种算法，利用这些功能我们可以在线上做灰度发布、故障转移等，Spring Cloud 到现在还不支持灰度发布、流量权重等功能。</p>
+<h4 id="另外："><a href="#另外：" class="headerlink" title="另外："></a>另外：</h4><p>· Dubbo存在的jar包依赖问题（大体是指，Dubbo内部对部分通用jar包依赖了不同版本）（后续更新：可以通过其它方式处理，并且Dubbo开发团队已经在后续版本中解决，但是需要升级）；<br>· 关于业界很多人说Dubbo是二进制RPC，Spring Cloud是基于HTTP协议的JSON，以此来衡量性能和传输效率，但其实存在不全面的地方， 感兴趣的完全可以通过测试工具去验证；<br>· 对于比较两者架构臃肿程度（例如Dubbo没有自己的依赖体系、Spring Cloud 全家桶过于臃肿自由度不高等），这些都是基于上述描述的一样，二者是不同是时期、不同目的的产物，自身设计都是尽可能贴合当下需求；</p>
+<h4 id="如果仅仅关注于服务治理的这个层面，Dubbo其实还优于Spring-Cloud很多："><a href="#如果仅仅关注于服务治理的这个层面，Dubbo其实还优于Spring-Cloud很多：" class="headerlink" title="如果仅仅关注于服务治理的这个层面，Dubbo其实还优于Spring Cloud很多："></a>如果仅仅关注于服务治理的这个层面，Dubbo其实还优于Spring Cloud很多：</h4><p>· Dubbo 支持更多的协议，如：rmi、hessian、http、webservice、thrift、memcached、redis 等。<br>· Dubbo 使用 RPC 协议效率更高，在极端压力测试下，Dubbo 的效率会高于 Spring Cloud 效率一倍多。<br>· Dubbo 有更强大的后台管理，Dubbo 提供的后台管理 Dubbo Admin 功能强大，提供了路由规则、动态配置、访问控制、权重调节、均衡负载等诸多强大的功能。<br>· 可以限制某个 IP 流量的访问权限，设置不同服务器分发不同的流量权重，并且支持多种算法，利用这些功能我们可以在线上做灰度发布、故障转移等，Spring Cloud 到现在还不支持灰度发布、流量权重等功能。</p>
 <p>所以Dubbo专注于服务治理；Spring Cloud关注于微服务架构生态。</p>
 <h3 id="Dubbo发布对Spring-Cloud有影响吗？"><a href="#Dubbo发布对Spring-Cloud有影响吗？" class="headerlink" title="Dubbo发布对Spring Cloud有影响吗？"></a>Dubbo发布对Spring Cloud有影响吗？</h3><p>国内技术人喜欢拿 Dubbo 和 Spring Cloud 进行对比，是因为两者都是服务治理非常优秀的开源框架。但它们两者的出发点是不一样的，Dubbo 关注于服务治理这块并且以后也会继续往这个方向去发展。Spring Cloud 关注的是微服务治理的生态。因为微服务治理的方方面面都是它所关注的内容，服务治理也只是微服务生态的一部分而已。因此可以大胆的断定，Dubbo 未来会在服务治理方面更为出色，而 Spring Cloud 在微服务治理上面无人能敌。</p>
 <p>同时根据 Dubbo 最新的更新技术来看，Dubbo 也会积极的拥抱开源，拥抱新技术。Dubbo 接下来的版本将会很快的支持 Spring Boot，方便我们享受高效开发的同时，也可以支持高效的服务调用。Dubbo 被广泛应用于中国各互联网公司，如今阿里又重新重视起来并且发布了新版本和一系列的计划，对于正在使用 Dubbo 的公司来说是一个喜讯，对于中国广大的开发者来说更是一件非常喜悦的事情。我们非常乐于看到中国有一款非常优秀的开源框架，让我们有更多的选择，有更好的支持。</p>
@@ -624,7 +624,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#首先看下Dubbo和Spring-Cloud有何不同？"><span class="nav-number">1.</span> <span class="nav-text">首先看下Dubbo和Spring Cloud有何不同？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#从上图可以看出其实Dubbo的功能只是Spring-Cloud体系的一部分。"><span class="nav-number">1.1.</span> <span class="nav-text">从上图可以看出其实Dubbo的功能只是Spring Cloud体系的一部分。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其它对比："><span class="nav-number">1.2.</span> <span class="nav-text">其它对比：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dubbo由于是二进制的传输，占用带宽会更少，"><span class="nav-number">1.3.</span> <span class="nav-text">dubbo由于是二进制的传输，占用带宽会更少，</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如果仅仅关注于服务治理的这个层面，Dubbo其实还优于Spring-Cloud很多："><span class="nav-number">1.4.</span> <span class="nav-text">如果仅仅关注于服务治理的这个层面，Dubbo其实还优于Spring Cloud很多：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dubbo发布对Spring-Cloud有影响吗？"><span class="nav-number">2.</span> <span class="nav-text">Dubbo发布对Spring Cloud有影响吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何选择？"><span class="nav-number">3.</span> <span class="nav-text">如何选择？</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#首先看下Dubbo和Spring-Cloud有何不同？"><span class="nav-number">1.</span> <span class="nav-text">首先看下Dubbo和Spring Cloud有何不同？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#从上图可以看出其实Dubbo的功能只是Spring-Cloud体系的一部分。"><span class="nav-number">1.1.</span> <span class="nav-text">从上图可以看出其实Dubbo的功能只是Spring Cloud体系的一部分。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#另外："><span class="nav-number">1.2.</span> <span class="nav-text">另外：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如果仅仅关注于服务治理的这个层面，Dubbo其实还优于Spring-Cloud很多："><span class="nav-number">1.3.</span> <span class="nav-text">如果仅仅关注于服务治理的这个层面，Dubbo其实还优于Spring Cloud很多：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dubbo发布对Spring-Cloud有影响吗？"><span class="nav-number">2.</span> <span class="nav-text">Dubbo发布对Spring Cloud有影响吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何选择？"><span class="nav-number">3.</span> <span class="nav-text">如何选择？</span></a></li></ol></div>
             
 
           </div>
