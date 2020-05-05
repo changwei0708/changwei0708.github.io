@@ -1035,6 +1035,418 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://changwei0708.github.io/2017/11/16/2017/alibaba-restart-maintenance-dubbo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="风中追风">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fz00x0zf's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/16/2017/alibaba-restart-maintenance-dubbo/" itemprop="url">阿里重启维护 Dubbo 了</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-16T20:13:02+08:00">
+                2017-11-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Dubbo/" itemprop="url" rel="index">
+                    <span itemprop="name">Dubbo</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近，开源社区发生了一件大事，那个曾经风靡国内 Java 开发者的开源 RPC 服务框架 —— Dubbo，低调宣布将重新得到官方维护与支持。</p>
+<p>对于 Dubbo 框架，大部分 Java 开发者都不会感到陌生，它自诞生起就备受关注。</p>
+<p>2011 年末，阿里巴巴在 GitHub 上开源了基于 Java 的分布式服务治理框架 Dubbo，之后它成为了国内该类开源项目的佼佼者，许多开发者对其表示青睐。同时，先后有不少公司在实践中基于 Dubbo 进行分布式系统架构，目前在 GitHub 上，它的 fork、star 数均已破万。</p>
+<p>Dubbo 致力于提供高性能和透明化的 RPC 远程服务调用方案，以及 SOA 服务治理方案，使得应用可通过高性能 RPC 实现服务的输出、输入功能和 Spring 框架无缝集成。Dubbo 包含远程通讯、集群容错和自动发现三个核心部分。</p>
+<h3 id="Dubbo-核心功能："><a href="#Dubbo-核心功能：" class="headerlink" title="Dubbo 核心功能："></a>Dubbo 核心功能：</h3><p>· 远程通讯，提供对多种基于长连接的 NIO 框架抽象封装，包括多种线程模型，序列化，以及“请求-响应”模式的信息交换方式。</p>
+<p>· 集群容错，提供基于接口方法的透明远程过程调用，包括多协议支持，以及软负载均衡，失败容错，地址路由，动态配置等集群支持。</p>
+<p>· 自动发现，基于注册中心目录服务，使服务消费方能动态的查找服务提供方，使地址透明，使服务提供方可以平滑增加或减少机器。</p>
+<h3 id="Dubbo-架构："><a href="#Dubbo-架构：" class="headerlink" title="Dubbo 架构："></a>Dubbo 架构：</h3><p><img src="/images/dubbo_architecture.png" alt="dubbo 架构图"></p>
+<h3 id="Dubbo发展史"><a href="#Dubbo发展史" class="headerlink" title="Dubbo发展史"></a>Dubbo发展史</h3><h4 id="发展到开源"><a href="#发展到开源" class="headerlink" title="发展到开源"></a>发展到开源</h4><p>2008 年底在阿里内部开始规划调用，2009 年初开发 1.0 版本；2010 年 04 月在 1.0 的版本之上进行了重构，发布了 2.0 版本；2011 年 10 月阿里宣布将 Dubbo 开源，开源的第一个版本为版本 dubbo-2.0.7。</p>
+<h4 id="开源成长"><a href="#开源成长" class="headerlink" title="开源成长"></a>开源成长</h4><p>Dubbo 开源之后，框架发展比较迅速，几乎两三个月会发布一个版本，于 2012 年 3 月 14 号发布版本 dubbo-2.1.0。随后又进入另一个快速发展期，版本发布频繁，几乎每一个月会发布好几次。直到 2013 年 3 月 17 号发布了 dubbo-2.4.10，版本陷入停滞；2014 年 10 月 30 号发布版本 dubbo-2.4.11，修复了一个小 Bug，版本又陷入漫长的停滞到现在。</p>
+<h4 id="阿里之外的发展"><a href="#阿里之外的发展" class="headerlink" title="阿里之外的发展"></a>阿里之外的发展</h4><p>2014 年的 10 月 20 号，当当网 Fork 了阿里的一个 Dubbo 版本开始维护，并命名为 dubbox-2.8.0。值得注意的是，当当网扩展 Dubbo 服务框架支持 REST 风格远程调用，并且跟随着 ZooKeepe 和 Spring 升级了对应的版本。之后 Dubbox 一直在小版本维护，2015 年 3 月 31 号发布了最后一个版本 dubbox-2.8.4。</p>
+<p>国内技术人喜欢拿 Dubbo 和 Spring Cloud 进行对比，因为两者都是服务治理非常优秀的开源框架。</p>
+<p>但事实上，这样对比是不够公平的，首先 Dubbo 是 SOA 时代的产物，它的关注点主要在于服务的调用，流量分发、流量监控和熔断。而 Spring Cloud 诞生于微服务架构时代，考虑的是微服务治理的方方面面，另外由于依托了 Spirng、Spirng Boot 的优势之上，两个框架在开始目标就不一致，Dubbo 定位服务治理、Spirng Cloud 是一个生态。</p>
+<p>因此可以大胆地判断，Dubbo 未来会在服务治理方面更为出色，而 Spring Cloud 在微服务治理上面无人能敌。</p>
+<p>提到 Dubbo 的未来，不禁想问大家，你们知道 Dubbo 重启维护后的上一个版本是什么时候发布的吗？是 2014 年 10 月 30 号，距今整整将近 3 年，Dubbo 所依赖的 JDK、Spring、Zookeeper、Zkclient 等等不知道都更新了多少个版本。</p>
+<p>因此 Dubbo 恢复更新的第一步就是适配所依赖的各组件版本，让 Dubbo 所依赖的基础环境不要太落伍，另外也修复了一些严重的 Bug。</p>
+<p>事实上，从 9 月开始，Dubbo 三个月里连着发布了四个版本（2.5.4、2.5.5、2.5.6 和 2.5.7），我们看看更新了什么 ——</p>
+<p>· 2.5.4：主要是解决 issues 和依赖升级</p>
+<p>· 2.5.5：升级了依赖包版本 ；以问题反馈频率和影响面排定优先级，优先解决了几个反馈最多、影响较大的一些缺陷，包括优雅停机、异步调用等</p>
+<p>· 2.5.6：优先级较高的几个 issue 修复，吸纳社区的优秀 PullRequest，新增 Netty4通信模块、线程堆栈dump特性</p>
+<p>· 2.5.7：阶段性完成了社区累积 issue 的处理，同时开始满足社区反映的新需求</p>
+<h3 id="Dubbo-Spring-Boot-工程"><a href="#Dubbo-Spring-Boot-工程" class="headerlink" title="Dubbo Spring Boot 工程"></a>Dubbo Spring Boot 工程</h3><p>Dubbo Apache Dubbo™ 是一款高性能Java RPC框架。 Spring Boot 应用场景的开发。同时也整合了 Spring Boot 特性：</p>
+<blockquote>
+<p>自动装配 (比如： 注解驱动, 自动装配等).<br>Production-Ready (比如： 安全, 健康检查, 外部化配置等).</p>
+</blockquote>
+<p>Apache Dubbo |ˈdʌbəʊ| 是一款高性能、轻量级的开源Java RPC框架，它提供了三大核心能力：面向接口的远程方法调用，智能容错和负载均衡，以及服务自动注册和发现。</p>
+<p>快速开始可以通过访问：</p>
+<p><a href="http://start.dubbo.io/" target="_blank" rel="noopener">http://start.dubbo.io/</a></p>
+<h3 id="关于升级新版本Dubbo"><a href="#关于升级新版本Dubbo" class="headerlink" title="关于升级新版本Dubbo"></a>关于升级新版本Dubbo</h3><p>Dubbo 社区目前主力维护的有 2.6.x 和 2.7.x 两大版本，其中，</p>
+<p>· 2.6.x 主要以 bugfix 和少量 enhancements 为主，因此能完全保证稳定性<br>· 2.7.x 作为社区的主要开发版本，得到持续更新并增加了大量新 feature 和优化，同时也带来了一些稳定性挑战</p>
+<p>为方便 Dubbo 用户升级，社区在以下表格对 Dubbo 的各个版本进行了总结，包括主要功能、稳定性和兼容性等，从多个方面评估每个版本，以期能帮助用户完成升级评估；</p>
+<p>但是考虑到目前大部分用户在使用的 dubbox（当当网维护的独立分支）是之前外部社区维护的项目，dubbox 分支在协议层面存在一些不兼容性改动，若新工程直接采用Dubbo目前主力维护的分支版本，则不需要考虑兼容问题，如果是对此前的旧项目进行升级，可能存在大量的兼容适配工作，是一个不小的工作量；</p>
+<h3 id="关于Dubbo的未来"><a href="#关于Dubbo的未来" class="headerlink" title="关于Dubbo的未来"></a>关于Dubbo的未来</h3><p>业内表示阿里内部现在基本上没有在使用 Dubbo，而是用了 Dubbo 之后开发的第三代 RPC 服务框架 HSF（High-speed Service Framework），那现在还将 Dubbo 重启维护，大家不免疑惑，Dubbo方面相关负责人表示:</p>
+<blockquote>
+<p>Dubbo2 作为一款优秀的开源产品，由于面向的用户群体非常广泛，这就决定了它的设计原则强调扩展性、使用轻量、以及对开源外围系统和协议的适配。通过开源社区的建议，目前 Dubbo 已经具备了一些特有功能，例如对 REST 的支持和对 Spring Boot 的集成。</p>
+</blockquote>
+<blockquote>
+<p>得注意的是，目前负责 Dubbo 的团队和内部负责 HSF 的是同一个团队，在聆听外部用户反馈之余，我们也会把大规模领域里的服务运维经验反哺回 Dubbo 社区，形成良性循环，做到真正意义上的内外统一。</p>
+</blockquote>
+<blockquote>
+<p>有关 Dubbo 项目今后的发展，还请密切关注 GitHub 上的 Release Notes（<a href="https://github.com/alibaba/dubbo/releases）以及" target="_blank" rel="noopener">https://github.com/alibaba/dubbo/releases）以及</a> Dubbo 的云栖社区专栏。</p>
+</blockquote>
+<p>相关网站和博文参考(持续更新中…)：</p>
+<p><a href="http://dubbo.apache.org/zh-cn/" target="_blank" rel="noopener">Apache Dubbo 官网</a><br><a href="http://dubbo.apache.org/zh-cn/ecology/index.html" target="_blank" rel="noopener">Apache Dubbo 生态系统,构建产品级微服务</a><br><a href="https://www.infoq.cn/article/2017/11/Ali-restart-maintenance-Dubbo" target="_blank" rel="noopener">阿里重启维护 Dubbo 了 - InfoQ</a><br><a href="http://www.ityouknow.com/springcloud/2017/11/20/dubbo-update-again.html" target="_blank" rel="noopener">阿里Dubbo疯狂更新，关Spring Cloud什么事？ - ityouknow</a><br><a href="https://github.com/apache/dubbo/issues/5669" target="_blank" rel="noopener">Dubbo 各版本总结与升级建议</a><br><a href="https://github.com/apache/dubbo-spring-boot-project" target="_blank" rel="noopener">Dubbo Spring Boot 脚手架</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://changwei0708.github.io/2017/01/20/2017/dubbo-vs-spring-cloud/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="风中追风">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fz00x0zf's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/20/2017/dubbo-vs-spring-cloud/" itemprop="url">Dubbo 与 Spring Cloud</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-20T20:13:02+08:00">
+                2017-01-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Spring-Cloud/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring Cloud</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近阿里方面低调重启Dubbo的更新，连续发布了几个更新版本，修复了大量的问题和进行框架优化，这也让业界目光又重新聚焦到了Dubbo 和 Spring Cloud 这两个开发者熟知的框架上，</p>
+<h3 id="首先看下Dubbo和Spring-Cloud有何不同？"><a href="#首先看下Dubbo和Spring-Cloud有何不同？" class="headerlink" title="首先看下Dubbo和Spring Cloud有何不同？"></a>首先看下Dubbo和Spring Cloud有何不同？</h3><table>
+<thead>
+<tr>
+<th>功能</th>
+<th style="text-align:center">Dubbo</th>
+<th style="text-align:right">Spring Cloud</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>服务注册中心</td>
+<td style="text-align:center">Zookeeper</td>
+<td style="text-align:right">Spring Cloud Netflix Eureka</td>
+</tr>
+<tr>
+<td>服务调用方式</td>
+<td style="text-align:center">RPC</td>
+<td style="text-align:right">REST API</td>
+</tr>
+<tr>
+<td>服务监控</td>
+<td style="text-align:center">Dubbo-monitor</td>
+<td style="text-align:right">Spring Boot Admin</td>
+</tr>
+<tr>
+<td>断路器</td>
+<td style="text-align:center">不完善</td>
+<td style="text-align:right">Spring</td>
+<td>Cloud Netflix Hystrix</td>
+</tr>
+<tr>
+<td>服务网关</td>
+<td style="text-align:center">无</td>
+<td style="text-align:right">Spring Cloud Netflix Zuul</td>
+</tr>
+<tr>
+<td>分布式配置</td>
+<td style="text-align:center">无</td>
+<td style="text-align:right">Spring Cloud Config</td>
+</tr>
+<tr>
+<td>服务跟踪</td>
+<td style="text-align:center">无</td>
+<td style="text-align:right">Spring Cloud Sleuth</td>
+</tr>
+<tr>
+<td>消息总线</td>
+<td style="text-align:center">无</td>
+<td style="text-align:right">Spring Cloud Bus</td>
+</tr>
+<tr>
+<td>数据流</td>
+<td style="text-align:center">无</td>
+<td style="text-align:right">Spring Cloud Stream</td>
+</tr>
+<tr>
+<td>批量任务</td>
+<td style="text-align:center">无</td>
+<td style="text-align:right">Spring Cloud Task</td>
+</tr>
+</tbody>
+</table>
+<h4 id="从上图可以看出其实Dubbo的功能只是Spring-Cloud体系的一部分。"><a href="#从上图可以看出其实Dubbo的功能只是Spring-Cloud体系的一部分。" class="headerlink" title="从上图可以看出其实Dubbo的功能只是Spring Cloud体系的一部分。"></a>从上图可以看出其实Dubbo的功能只是Spring Cloud体系的一部分。</h4><blockquote>
+<p>但其实这样对比是不够公平的，首先 Dubbo 是 SOA 时代的产物，它的关注点主要在于服务的调用，流量分发、流量监控和熔断。而 Spring Cloud 诞生于微服务架构时代，考虑的是微服务治理的方方面面，另外由于依托了 Spring、Spring Boot 的优势之上，两个框架在开始目标就不一致，Dubbo 定位服务治理、Spring Cloud 是一个生态。</p>
+</blockquote>
+<h4 id="其它对比："><a href="#其它对比：" class="headerlink" title="其它对比："></a>其它对比：</h4><h4 id="dubbo由于是二进制的传输，占用带宽会更少，"><a href="#dubbo由于是二进制的传输，占用带宽会更少，" class="headerlink" title="dubbo由于是二进制的传输，占用带宽会更少，"></a>dubbo由于是二进制的传输，占用带宽会更少，</h4><h4 id="如果仅仅关注于服务治理的这个层面，Dubbo其实还优于Spring-Cloud很多："><a href="#如果仅仅关注于服务治理的这个层面，Dubbo其实还优于Spring-Cloud很多：" class="headerlink" title="如果仅仅关注于服务治理的这个层面，Dubbo其实还优于Spring Cloud很多："></a>如果仅仅关注于服务治理的这个层面，Dubbo其实还优于Spring Cloud很多：</h4><p>· Dubbo 支持更多的协议，如：rmi、hessian、http、webservice、thrift、memcached、redis 等。<br>· Dubbo 使用 RPC 协议效率更高，在极端压力测试下，Dubbo 的效率会高于 Spring Cloud 效率一倍多。<br>· Dubbo 有更强大的后台管理，Dubbo 提供的后台管理 Dubbo Admin 功能强大，提供了路由规则、动态配置、访问控制、权重调节、均衡负载等诸多强大的功能。<br>· 可以限制某个 IP 流量的访问权限，设置不同服务器分发不同的流量权重，并且支持多种算法，利用这些功能我们可以在线上做灰度发布、故障转移等，Spring Cloud 到现在还不支持灰度发布、流量权重等功能。</p>
+<p>所以Dubbo专注于服务治理；Spring Cloud关注于微服务架构生态。</p>
+<h3 id="Dubbo发布对Spring-Cloud有影响吗？"><a href="#Dubbo发布对Spring-Cloud有影响吗？" class="headerlink" title="Dubbo发布对Spring Cloud有影响吗？"></a>Dubbo发布对Spring Cloud有影响吗？</h3><p>国内技术人喜欢拿 Dubbo 和 Spring Cloud 进行对比，是因为两者都是服务治理非常优秀的开源框架。但它们两者的出发点是不一样的，Dubbo 关注于服务治理这块并且以后也会继续往这个方向去发展。Spring Cloud 关注的是微服务治理的生态。因为微服务治理的方方面面都是它所关注的内容，服务治理也只是微服务生态的一部分而已。因此可以大胆的断定，Dubbo 未来会在服务治理方面更为出色，而 Spring Cloud 在微服务治理上面无人能敌。</p>
+<p>同时根据 Dubbo 最新的更新技术来看，Dubbo 也会积极的拥抱开源，拥抱新技术。Dubbo 接下来的版本将会很快的支持 Spring Boot，方便我们享受高效开发的同时，也可以支持高效的服务调用。Dubbo 被广泛应用于中国各互联网公司，如今阿里又重新重视起来并且发布了新版本和一系列的计划，对于正在使用 Dubbo 的公司来说是一个喜讯，对于中国广大的开发者来说更是一件非常喜悦的事情。我们非常乐于看到中国有一款非常优秀的开源框架，让我们有更多的选择，有更好的支持。</p>
+<p>两者其实不一定有竞争关系，如果使用得当甚至可以互补；另外两个关注的领域也不一致，因此对 Spring Cloud 的影响甚微。</p>
+<h3 id="如何选择？"><a href="#如何选择？" class="headerlink" title="如何选择？"></a>如何选择？</h3><p>可能很多人正在犹豫，在服务治理的时候应该选择那个框架呢？如果公司对效率有极高的要求建议使用 Dubbo，相对比 RPC 的效率会比 HTTP 高很多；如果团队不想对技术架构做大的改造建议使用 Dubbo，Dubbo 仅仅需要少量的修改就可以融入到内部系统的架构中。但如果技术团队喜欢挑战新技术，建议选择 Spring Cloud，Spring Cloud 架构体系有有趣很酷的技术。如果公司选择微服务架构去重构整个技术体系，那么 Spring Cloud 是当仁不让之选，它可以说是目前最好的微服务框架没有之一。</p>
+<p>最后，技术选型是一个综合的问题，需要考虑团队的情况、业务的发展以及公司的产品特征。最炫最酷的技术并不一定是最好的，选择适合自己团队、符合公司业务的框架才是最佳方案。技术的发展永远没有尽头，因此我们对技术也要保持空杯、保持饥饿、保持敬畏！</p>
+<p>相关网站和博文参考(持续更新中…)：</p>
+<p><a href="http://dubbo.apache.org/zh-cn/" target="_blank" rel="noopener">Apache Dubbo 官网</a><br><a href="http://dubbo.apache.org/zh-cn/ecology/index.html" target="_blank" rel="noopener">Apache Dubbo 生态系统,构建产品级微服务</a><br><a href="https://www.infoq.cn/article/2017/11/Ali-restart-maintenance-Dubbo" target="_blank" rel="noopener">阿里重启维护 Dubbo 了 - InfoQ</a><br><a href="http://www.ityouknow.com/springcloud/2017/11/20/dubbo-update-again.html" target="_blank" rel="noopener">阿里Dubbo疯狂更新，关Spring Cloud什么事？ - ityouknow</a><br><a href="https://github.com/apache/dubbo/issues/5669" target="_blank" rel="noopener">Dubbo 各版本总结与升级建议</a><br><a href="https://github.com/apache/dubbo-spring-boot-project" target="_blank" rel="noopener">Dubbo Spring Boot 脚手架</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://changwei0708.github.io/2017/01/20/2017/springcloud-collect/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1770,339 +2182,6 @@ public User getUser() {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://changwei0708.github.io/2016/01/06/2016/spring-boot-quick-start/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="风中追风">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="fz00x0zf's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/01/06/2016/spring-boot-quick-start/" itemprop="url">Spring Boot(一)：入门篇</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-01-06T19:20:02+08:00">
-                2016-01-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/Spring-Boot/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring Boot</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。通过这种方式，Spring Boot让我们的Spring应用变的更轻量化。可以仅仅依靠一个Java类来运行一个Spring引用。你也可以打包你的应用为jar并通过使用java -jar来运行你的Spring Web应用。</p>
-<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><p>· 创建独立的Spring应用程序<br>· 嵌入的Tomcat，无需部署WAR文件，内嵌式容器简化Web项目<br>· 简化Maven配置<br>· 自动配置Spring<br>· 提供生产就绪型功能，如指标，健康检查和外部配置<br>· 没有冗余代码生成和XML配置的要求<br>· 为所有Spring开发者更快的入门<br>· 开箱即用，提供各种默认配置来简化项目配置</p>
-<h4 id="基础项目结构介绍"><a href="#基础项目结构介绍" class="headerlink" title="基础项目结构介绍"></a>基础项目结构介绍</h4><h5 id="Maven-构建项目"><a href="#Maven-构建项目" class="headerlink" title="Maven 构建项目"></a>Maven 构建项目</h5><p>1、访问 <a href="http://start.spring.io/" target="_blank" rel="noopener">http://start.spring.io/</a><br>2、选择构建工具 Maven Project、Java、Spring Boot 版本 2.1.3 以及一些工程基本信息，可参考下图所示：<br>3、点击 Generate Project 下载项目压缩包<br>4、解压后，使用 Idea 导入项目，File -&gt; New -&gt; Model from Existing Source.. -&gt; 选择解压后的文件夹 -&gt; OK，选择 Maven 一路 Next，OK done!<br>5、如果使用的是 Eclipse，Import -&gt; Existing Maven Projects -&gt; Next -&gt; 选择解压后的文件夹 -&gt; Finsh，OK done!</p>
-<h5 id="Idea-构建项目"><a href="#Idea-构建项目" class="headerlink" title="Idea 构建项目"></a>Idea 构建项目</h5><p>1、选择 File -&gt; New —&gt; Project… 弹出新建项目的框<br>2、选择 Spring Initializr，Next 也会出现上述类似的配置界面，Idea 帮我们做了集成<br>3、填写相关内容后，点击 Next 选择依赖的包再点击 Next，最后确定信息无误点击 Finish。</p>
-<h5 id="Spring-Boot的基础结构共三个文件"><a href="#Spring-Boot的基础结构共三个文件" class="headerlink" title="Spring Boot的基础结构共三个文件:"></a>Spring Boot的基础结构共三个文件:</h5><p>~src/main/java  程序开发以及主程序入口<br>~src/main/resources 配置文件<br>~src/test/java  测试程序</p>
-<h5 id="Spingboot建议的目录结果如下："><a href="#Spingboot建议的目录结果如下：" class="headerlink" title="Spingboot建议的目录结果如下："></a>Spingboot建议的目录结果如下：</h5><p>root package 结构：com.example.myproject</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">com</span><br><span class="line">  +- example</span><br><span class="line">    +- myproject</span><br><span class="line">      +- Application.java</span><br><span class="line">      |</span><br><span class="line">      +- domain</span><br><span class="line">      |  +- Customer.java</span><br><span class="line">      |  +- CustomerRepository.java</span><br><span class="line">      |</span><br><span class="line">      +- service</span><br><span class="line">      |  +- CustomerService.java</span><br><span class="line">      |</span><br><span class="line">      +- controller</span><br><span class="line">      |  +- CustomerController.java</span><br><span class="line">      |</span><br></pre></td></tr></table></figure>
-<p>1、Application.java 建议放到跟目录下面,主要用于做一些框架配置<br>2、domain目录主要用于实体（Entity）与数据访问层（Repository）<br>3、service 层主要是业务类代码<br>4、controller 负责页面访问控制</p>
-<p>采用默认配置可以省去很多配置，当然也可以根据自己的喜欢来进行更改<br>最后，启动Application main方法，至此一个java项目搭建好了！</p>
-<h5 id="引入-Web-模块"><a href="#引入-Web-模块" class="headerlink" title="引入 Web 模块"></a>引入 Web 模块</h5><p>1、pom.xml中添加支持web的模块：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line"> &lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-<p>pom.xml文件中默认有两个模块：<br>spring-boot-starter：核心模块，包括自动配置支持、日志和YAML；<br>spring-boot-starter-test：测试模块，包括JUnit、Hamcrest、Mockito。</p>
-<p>2、编写controller内容</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@RestController</span><br><span class="line">public class HelloWorldController &#123;</span><br><span class="line">    @RequestMapping(&quot;/hello&quot;)</span><br><span class="line">    public String index() &#123;</span><br><span class="line">        return &quot;Hello World&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>@RestController的意思就是controller里面的方法都以json格式输出，不用再写什么jackjson配置的了！</p>
-<p> 3、启动主程序，打开浏览器访问<a href="http://localhost:8080/hello，就可以看到效果了，有木有很简单！" target="_blank" rel="noopener">http://localhost:8080/hello，就可以看到效果了，有木有很简单！</a></p>
-<h5 id="如何做单元测试"><a href="#如何做单元测试" class="headerlink" title="如何做单元测试"></a>如何做单元测试</h5><p>打开的src/test/下的测试入口，编写简单的http请求来测试；使用mockmvc进行，利用MockMvcResultHandlers.print()打印出执行结果。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">@RunWith(SpringRunner.class)</span><br><span class="line">  @SpringBootTest</span><br><span class="line"></span><br><span class="line">public class HelloWorldControlerTests &#123;</span><br><span class="line">    private MockMvc mvc;</span><br><span class="line">    @Before</span><br><span class="line">    public void setUp() throws Exception &#123;</span><br><span class="line">        mvc = MockMvcBuilders.standaloneSetup(new HelloWorldController()).build();</span><br><span class="line">    &#125;</span><br><span class="line">    @Test</span><br><span class="line">    public void getHello() throws Exception &#123;</span><br><span class="line">    mvc.perform(MockMvcRequestBuilders.get(&quot;/hello&quot;).accept(MediaType.APPLICATION_JSON))</span><br><span class="line">                .andExpect(MockMvcResultMatchers.status().isOk())</span><br><span class="line">                .andDo(MockMvcResultHandlers.print())</span><br><span class="line">                .andReturn();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>开发环境的调试</p>
-<p>热启动在正常开发项目中已经很常见了吧，虽然平时开发 web 项目过程中，改动项目启重启总是报错；但 Spring Boot 对调试支持很好，修改之后可以实时生效，需要添加以下的配置：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;</span><br><span class="line">        &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">   &lt;/dependency&gt;</span><br><span class="line">&lt;/dependencies&gt;</span><br><span class="line">&lt;build&gt;</span><br><span class="line">    &lt;plugins&gt;</span><br><span class="line">        &lt;plugin&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">            &lt;configuration&gt;</span><br><span class="line">                &lt;fork&gt;true&lt;/fork&gt;</span><br><span class="line">            &lt;/configuration&gt;</span><br><span class="line">        &lt;/plugin&gt;</span><br><span class="line">   &lt;/plugins&gt;</span><br><span class="line">&lt;/build&gt;</span><br></pre></td></tr></table></figure>
-<p>该模块在完整的打包环境下运行的时候会被禁用。如果你使用java -jar启动应用或者用一个特定的classloader启动，它会认为这是一个“生产环境”。</p>
-<p>总结</p>
-<p>使用 Spring Boot 可以非常方便、快速搭建项目，使我们不用关心框架之间的兼容性，适用版本等各种问题，我们想使用任何东西，仅仅添加一个配置就可以，所以使用 Spring Boot 非常适合构建微服务。</p>
-<p><a href="http://www.ityouknow.com/springboot/2016/01/06/spring-boot-quick-start.html" target="_blank" rel="noopener">原文地址</a></p>
-<p>（转载本站文章请注明作者和出处 纯洁的微笑-ityouknow）</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://changwei0708.github.io/2016/01/01/2016/springboot-resource/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="风中追风">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="fz00x0zf's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/01/01/2016/springboot-resource/" itemprop="url">Spring Boot 学习资料汇总</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-01-01T20:20:02+08:00">
-                2016-01-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/Spring-Boot/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring Boot</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="网站"><a href="#网站" class="headerlink" title="网站"></a>网站</h4><p><a href="http://projects.spring.io/spring-boot/" target="_blank" rel="noopener">Spring boot 官网</a><br><a href="https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/" target="_blank" rel="noopener">Spring Boot 参考指南- 英文版</a></p>
-<h4 id="博客"><a href="#博客" class="headerlink" title="博客"></a>博客</h4><p><a href="http://www.ityouknow.com/spring-boot.html" target="_blank" rel="noopener">纯洁的微笑-Spring Boot系列文章</a><br><a href="http://412887952-qq-com.iteye.com/category/356333" target="_blank" rel="noopener">林祥纤-从零开始学Spring Boot</a><br><a href="http://www.mkyong.com/tutorials/spring-boot-tutorials/" target="_blank" rel="noopener">Mkyong-Spring Boot教程（国外）</a><br><a href="https://www.baeldung.com/spring-boot" target="_blank" rel="noopener">baeldung-Spring Boot教程（国外）</a><br><a href="http://blog.csdn.net/liaokailin/article/category/5765237" target="_blank" rel="noopener">liaokailin的专栏-Spring Boot实战</a><br><a href="http://blog.csdn.net/column/details/spring-boot.html" target="_blank" rel="noopener">catoop的专栏-Spring Boot 学习</a><br><a href="http://blog.csdn.net/column/details/15397.html" target="_blank" rel="noopener">方志朋-SpringBoot 非官方教程</a><br><a href="http://tengj.top/categories/Spring-Boot%E5%B9%B2%E8%B4%A7%E7%B3%BB%E5%88%97/" target="_blank" rel="noopener">嘟嘟-Spring-Boot干货系列</a><br><a href="https://blog.52itstyle.com/category/springBoot/" target="_blank" rel="noopener">小柒-SpringBoot开发案例</a><br><a href="http://blog.csdn.net/column/details/13987.html" target="_blank" rel="noopener">江南一点雨-关于Spring Boot</a><br><a href="https://www.tianmaying.com/tutorials/tag/Springboot" target="_blank" rel="noopener">天码营-Spring Boot</a><br><a href="http://cxytiandi.com/blog/detail/17437" target="_blank" rel="noopener">猿天地-Spring Boot</a></p>
-<h4 id="开源项目"><a href="#开源项目" class="headerlink" title="开源项目"></a>开源项目</h4><p><a href="https://github.com/ityouknow/spring-boot-examples" target="_blank" rel="noopener">纯洁的微笑 Spring Boot 示例</a><br><a href="https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples" target="_blank" rel="noopener">Spring Boot 官方示例</a><br><a href="https://github.com/cloudfavorites/favorites-web" target="_blank" rel="noopener">Spring Boot开源软件 云收藏</a><br><a href="https://github.com/ZHENFENG13/My-Blog" target="_blank" rel="noopener">Docker+SpringBoot+Mybatis+thymeleaf等技术实现的Java博客系统</a><br><a href="https://github.com/wuyouzhuguli/FEBS" target="_blank" rel="noopener">Spring boot &amp; Shiro 权限管理系统</a><br><a href="https://gitee.com/52itstyle/spring-boot-pay" target="_blank" rel="noopener">Spring Boot实现支付服务：支付宝，微信…</a><br><a href="https://gitee.com/JiaGou-XiaoGe/webappchat" target="_blank" rel="noopener">Spring Boot后台商城 h5 小程序</a><br><a href="https://gitee.com/alexyang/spring-boot-filemanager" target="_blank" rel="noopener">基于Spring Boot响应式文件浏览管理器</a><br><a href="https://github.com/Raysmond/SpringBlog" target="_blank" rel="noopener">Spring Boot开源博客</a><br><a href="https://gitee.com/52itstyle/spring-boot-mail" target="_blank" rel="noopener">邮件发送服务多种实现，队列，线程定时任务</a><br><a href="https://github.com/ChinaSilence/any-video" target="_blank" rel="noopener">Spring Boot视频展示项目</a><br><a href="https://github.com/timebusker/spring-boot" target="_blank" rel="noopener">Spring Boot项目实践总结</a><br><a href="https://github.com/lenve/VBlog" target="_blank" rel="noopener">Vue+SpringBoot实现的多用户博客管理平台</a><br><a href="https://github.com/lenve/vhr" target="_blank" rel="noopener">Vue+SpringBoot实现的人力资源管理系统</a><br><a href="https://github.com/hs-web/hsweb-framework" target="_blank" rel="noopener">hsweb企业后台管理系统基础框架</a><br><a href="https://github.com/kingschan1204/istock" target="_blank" rel="noopener">一个基于spring boot 实现的股票指数💹爬虫</a><br><a href="https://gitee.com/kekingcn/file-online-preview" target="_blank" rel="noopener">KKFileView-SpringBoot实现在线预览</a><br><a href="https://gitee.com/kailing/boot-websocket-log" target="_blank" rel="noopener">boot-websocket-log-SpringBoot实现日志WEB输出</a><br><a href="https://gitee.com/lcg0124/bootdo" target="_blank" rel="noopener">SpringBoot+MyBatis+ApacheShiro+Ehcahe基础平台</a><br><a href="https://github.com/leelance/spring-boot-all" target="_blank" rel="noopener">leelance Spring Boot各种示例</a><br><a href="https://github.com/lihengming/spring-boot-api-project-seed" target="_blank" rel="noopener">一个基于Spring Boot &amp; MyBatis的种子项目，用于快速构建中小型API、RESTful API项目</a><br><a href="https://github.com/szerhusenBC/jwt-spring-security-demo" target="_blank" rel="noopener">JWT (Json Web Token) with Spring Security and Spring Boot 2</a><br><a href="https://github.com/vito16/shop" target="_blank" rel="noopener">基于Spring-boot和bootstrap搭建的商城系统</a><br><a href="https://github.com/microservices-demo/microservices-demo" target="_blank" rel="noopener">Deployment scripts &amp; config for Sock Shop</a><br><a href="https://gitee.com/yadong.zhang/DBlog" target="_blank" rel="noopener">Spring Boot 开源博客-DBlog</a><br><a href="https://github.com/ChinaLHR/JavaQuarkBBS" target="_blank" rel="noopener">Spring Boot 实现的简易社区</a><br><a href="https://gitee.com/tomsun28/bootshiro" target="_blank" rel="noopener">springboot+shiro+jwt 开源项目</a><br><a href="https://github.com/stylefeng/Guns" target="_blank" rel="noopener">Guns-基于SpringBoot的后台管理系统</a><br><a href="https://github.com/ruibaby/halo" target="_blank" rel="noopener">halo-基于SpringBoot的博客系统</a><br><a href="https://github.com/zhudyos/duic" target="_blank" rel="noopener">zhudyos/duic Distributed configuration center（分布式配置中心）</a><br><a href="https://github.com/linlinjava/litemall" target="_blank" rel="noopener">Spring Boot后端 + Vue管理员前端 + 微信小程序用户前端</a><br><a href="https://github.com/macrozheng/mall" target="_blank" rel="noopener">mall-SpringBoot+MyBatis 电商系统</a><br><a href="https://github.com/macrozheng/mall" target="_blank" rel="noopener">基于Spring Boot2.0微服务脚手架</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2153,7 +2232,7 @@ public User getUser() {
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2164,7 +2243,7 @@ public User getUser() {
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -2175,7 +2254,7 @@ public User getUser() {
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,Dubbo," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近，开源社区发生了一件大事，那个曾经风靡国内 Java 开发者的开源 RPC 服务框架 —— Dubbo，低调宣布将重新得到官方维护与支持。 对于 Dubbo 框架，大部分 Java 开发者都不会感到陌生，它自诞生起就备受关注。 2011 年末，阿里巴巴在 GitHub 上开源了基于 Java 的分布式服务治理框架 Dubbo，之后它成为了国内该类开源项目的佼佼者，许多开发者对其表示青睐。同时，">
+<meta name="keywords" content="Java,Dubbo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="阿里重启维护 Dubbo 了">
+<meta property="og:url" content="http://changwei0708.github.io/2017/11/16/2017/alibaba-restart-maintenance-dubbo/index.html">
+<meta property="og:site_name" content="fz00x0zf&#39;s blog">
+<meta property="og:description" content="最近，开源社区发生了一件大事，那个曾经风靡国内 Java 开发者的开源 RPC 服务框架 —— Dubbo，低调宣布将重新得到官方维护与支持。 对于 Dubbo 框架，大部分 Java 开发者都不会感到陌生，它自诞生起就备受关注。 2011 年末，阿里巴巴在 GitHub 上开源了基于 Java 的分布式服务治理框架 Dubbo，之后它成为了国内该类开源项目的佼佼者，许多开发者对其表示青睐。同时，">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://changwei0708.github.io/images/dubbo_architecture.png">
+<meta property="og:updated_time" content="2020-05-04T09:59:52.298Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="阿里重启维护 Dubbo 了">
+<meta name="twitter:description" content="最近，开源社区发生了一件大事，那个曾经风靡国内 Java 开发者的开源 RPC 服务框架 —— Dubbo，低调宣布将重新得到官方维护与支持。 对于 Dubbo 框架，大部分 Java 开发者都不会感到陌生，它自诞生起就备受关注。 2011 年末，阿里巴巴在 GitHub 上开源了基于 Java 的分布式服务治理框架 Dubbo，之后它成为了国内该类开源项目的佼佼者，许多开发者对其表示青睐。同时，">
+<meta name="twitter:image" content="http://changwei0708.github.io/images/dubbo_architecture.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://changwei0708.github.io/2017/11/16/2017/alibaba-restart-maintenance-dubbo/"/>
+
+
+
+
+
+  <title>阿里重启维护 Dubbo 了 | fz00x0zf's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fz00x0zf's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-日志">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            日志
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-玩儿">
+          <a href="/play/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-play"></i> <br />
+            
+            玩儿
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://changwei0708.github.io/2017/11/16/2017/alibaba-restart-maintenance-dubbo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="风中追风">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fz00x0zf's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">阿里重启维护 Dubbo 了</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-16T20:13:02+08:00">
+                2017-11-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Dubbo/" itemprop="url" rel="index">
+                    <span itemprop="name">Dubbo</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近，开源社区发生了一件大事，那个曾经风靡国内 Java 开发者的开源 RPC 服务框架 —— Dubbo，低调宣布将重新得到官方维护与支持。</p>
+<p>对于 Dubbo 框架，大部分 Java 开发者都不会感到陌生，它自诞生起就备受关注。</p>
+<p>2011 年末，阿里巴巴在 GitHub 上开源了基于 Java 的分布式服务治理框架 Dubbo，之后它成为了国内该类开源项目的佼佼者，许多开发者对其表示青睐。同时，先后有不少公司在实践中基于 Dubbo 进行分布式系统架构，目前在 GitHub 上，它的 fork、star 数均已破万。</p>
+<p>Dubbo 致力于提供高性能和透明化的 RPC 远程服务调用方案，以及 SOA 服务治理方案，使得应用可通过高性能 RPC 实现服务的输出、输入功能和 Spring 框架无缝集成。Dubbo 包含远程通讯、集群容错和自动发现三个核心部分。</p>
+<h3 id="Dubbo-核心功能："><a href="#Dubbo-核心功能：" class="headerlink" title="Dubbo 核心功能："></a>Dubbo 核心功能：</h3><p>· 远程通讯，提供对多种基于长连接的 NIO 框架抽象封装，包括多种线程模型，序列化，以及“请求-响应”模式的信息交换方式。</p>
+<p>· 集群容错，提供基于接口方法的透明远程过程调用，包括多协议支持，以及软负载均衡，失败容错，地址路由，动态配置等集群支持。</p>
+<p>· 自动发现，基于注册中心目录服务，使服务消费方能动态的查找服务提供方，使地址透明，使服务提供方可以平滑增加或减少机器。</p>
+<h3 id="Dubbo-架构："><a href="#Dubbo-架构：" class="headerlink" title="Dubbo 架构："></a>Dubbo 架构：</h3><p><img src="/images/dubbo_architecture.png" alt="dubbo 架构图"></p>
+<h3 id="Dubbo发展史"><a href="#Dubbo发展史" class="headerlink" title="Dubbo发展史"></a>Dubbo发展史</h3><h4 id="发展到开源"><a href="#发展到开源" class="headerlink" title="发展到开源"></a>发展到开源</h4><p>2008 年底在阿里内部开始规划调用，2009 年初开发 1.0 版本；2010 年 04 月在 1.0 的版本之上进行了重构，发布了 2.0 版本；2011 年 10 月阿里宣布将 Dubbo 开源，开源的第一个版本为版本 dubbo-2.0.7。</p>
+<h4 id="开源成长"><a href="#开源成长" class="headerlink" title="开源成长"></a>开源成长</h4><p>Dubbo 开源之后，框架发展比较迅速，几乎两三个月会发布一个版本，于 2012 年 3 月 14 号发布版本 dubbo-2.1.0。随后又进入另一个快速发展期，版本发布频繁，几乎每一个月会发布好几次。直到 2013 年 3 月 17 号发布了 dubbo-2.4.10，版本陷入停滞；2014 年 10 月 30 号发布版本 dubbo-2.4.11，修复了一个小 Bug，版本又陷入漫长的停滞到现在。</p>
+<h4 id="阿里之外的发展"><a href="#阿里之外的发展" class="headerlink" title="阿里之外的发展"></a>阿里之外的发展</h4><p>2014 年的 10 月 20 号，当当网 Fork 了阿里的一个 Dubbo 版本开始维护，并命名为 dubbox-2.8.0。值得注意的是，当当网扩展 Dubbo 服务框架支持 REST 风格远程调用，并且跟随着 ZooKeepe 和 Spring 升级了对应的版本。之后 Dubbox 一直在小版本维护，2015 年 3 月 31 号发布了最后一个版本 dubbox-2.8.4。</p>
+<p>国内技术人喜欢拿 Dubbo 和 Spring Cloud 进行对比，因为两者都是服务治理非常优秀的开源框架。</p>
+<p>但事实上，这样对比是不够公平的，首先 Dubbo 是 SOA 时代的产物，它的关注点主要在于服务的调用，流量分发、流量监控和熔断。而 Spring Cloud 诞生于微服务架构时代，考虑的是微服务治理的方方面面，另外由于依托了 Spirng、Spirng Boot 的优势之上，两个框架在开始目标就不一致，Dubbo 定位服务治理、Spirng Cloud 是一个生态。</p>
+<p>因此可以大胆地判断，Dubbo 未来会在服务治理方面更为出色，而 Spring Cloud 在微服务治理上面无人能敌。</p>
+<p>提到 Dubbo 的未来，不禁想问大家，你们知道 Dubbo 重启维护后的上一个版本是什么时候发布的吗？是 2014 年 10 月 30 号，距今整整将近 3 年，Dubbo 所依赖的 JDK、Spring、Zookeeper、Zkclient 等等不知道都更新了多少个版本。</p>
+<p>因此 Dubbo 恢复更新的第一步就是适配所依赖的各组件版本，让 Dubbo 所依赖的基础环境不要太落伍，另外也修复了一些严重的 Bug。</p>
+<p>事实上，从 9 月开始，Dubbo 三个月里连着发布了四个版本（2.5.4、2.5.5、2.5.6 和 2.5.7），我们看看更新了什么 ——</p>
+<p>· 2.5.4：主要是解决 issues 和依赖升级</p>
+<p>· 2.5.5：升级了依赖包版本 ；以问题反馈频率和影响面排定优先级，优先解决了几个反馈最多、影响较大的一些缺陷，包括优雅停机、异步调用等</p>
+<p>· 2.5.6：优先级较高的几个 issue 修复，吸纳社区的优秀 PullRequest，新增 Netty4通信模块、线程堆栈dump特性</p>
+<p>· 2.5.7：阶段性完成了社区累积 issue 的处理，同时开始满足社区反映的新需求</p>
+<h3 id="Dubbo-Spring-Boot-工程"><a href="#Dubbo-Spring-Boot-工程" class="headerlink" title="Dubbo Spring Boot 工程"></a>Dubbo Spring Boot 工程</h3><p>Dubbo Apache Dubbo™ 是一款高性能Java RPC框架。 Spring Boot 应用场景的开发。同时也整合了 Spring Boot 特性：</p>
+<blockquote>
+<p>自动装配 (比如： 注解驱动, 自动装配等).<br>Production-Ready (比如： 安全, 健康检查, 外部化配置等).</p>
+</blockquote>
+<p>Apache Dubbo |ˈdʌbəʊ| 是一款高性能、轻量级的开源Java RPC框架，它提供了三大核心能力：面向接口的远程方法调用，智能容错和负载均衡，以及服务自动注册和发现。</p>
+<p>快速开始可以通过访问：</p>
+<p><a href="http://start.dubbo.io/" target="_blank" rel="noopener">http://start.dubbo.io/</a></p>
+<h3 id="关于升级新版本Dubbo"><a href="#关于升级新版本Dubbo" class="headerlink" title="关于升级新版本Dubbo"></a>关于升级新版本Dubbo</h3><p>Dubbo 社区目前主力维护的有 2.6.x 和 2.7.x 两大版本，其中，</p>
+<p>· 2.6.x 主要以 bugfix 和少量 enhancements 为主，因此能完全保证稳定性<br>· 2.7.x 作为社区的主要开发版本，得到持续更新并增加了大量新 feature 和优化，同时也带来了一些稳定性挑战</p>
+<p>为方便 Dubbo 用户升级，社区在以下表格对 Dubbo 的各个版本进行了总结，包括主要功能、稳定性和兼容性等，从多个方面评估每个版本，以期能帮助用户完成升级评估；</p>
+<p>但是考虑到目前大部分用户在使用的 dubbox（当当网维护的独立分支）是之前外部社区维护的项目，dubbox 分支在协议层面存在一些不兼容性改动，若新工程直接采用Dubbo目前主力维护的分支版本，则不需要考虑兼容问题，如果是对此前的旧项目进行升级，可能存在大量的兼容适配工作，是一个不小的工作量；</p>
+<h3 id="关于Dubbo的未来"><a href="#关于Dubbo的未来" class="headerlink" title="关于Dubbo的未来"></a>关于Dubbo的未来</h3><p>业内表示阿里内部现在基本上没有在使用 Dubbo，而是用了 Dubbo 之后开发的第三代 RPC 服务框架 HSF（High-speed Service Framework），那现在还将 Dubbo 重启维护，大家不免疑惑，Dubbo方面相关负责人表示:</p>
+<blockquote>
+<p>Dubbo2 作为一款优秀的开源产品，由于面向的用户群体非常广泛，这就决定了它的设计原则强调扩展性、使用轻量、以及对开源外围系统和协议的适配。通过开源社区的建议，目前 Dubbo 已经具备了一些特有功能，例如对 REST 的支持和对 Spring Boot 的集成。</p>
+</blockquote>
+<blockquote>
+<p>得注意的是，目前负责 Dubbo 的团队和内部负责 HSF 的是同一个团队，在聆听外部用户反馈之余，我们也会把大规模领域里的服务运维经验反哺回 Dubbo 社区，形成良性循环，做到真正意义上的内外统一。</p>
+</blockquote>
+<blockquote>
+<p>有关 Dubbo 项目今后的发展，还请密切关注 GitHub 上的 Release Notes（<a href="https://github.com/alibaba/dubbo/releases）以及" target="_blank" rel="noopener">https://github.com/alibaba/dubbo/releases）以及</a> Dubbo 的云栖社区专栏。</p>
+</blockquote>
+<p>相关网站和博文参考(持续更新中…)：</p>
+<p><a href="http://dubbo.apache.org/zh-cn/" target="_blank" rel="noopener">Apache Dubbo 官网</a><br><a href="http://dubbo.apache.org/zh-cn/ecology/index.html" target="_blank" rel="noopener">Apache Dubbo 生态系统,构建产品级微服务</a><br><a href="https://www.infoq.cn/article/2017/11/Ali-restart-maintenance-Dubbo" target="_blank" rel="noopener">阿里重启维护 Dubbo 了 - InfoQ</a><br><a href="http://www.ityouknow.com/springcloud/2017/11/20/dubbo-update-again.html" target="_blank" rel="noopener">阿里Dubbo疯狂更新，关Spring Cloud什么事？ - ityouknow</a><br><a href="https://github.com/apache/dubbo/issues/5669" target="_blank" rel="noopener">Dubbo 各版本总结与升级建议</a><br><a href="https://github.com/apache/dubbo-spring-boot-project" target="_blank" rel="noopener">Dubbo Spring Boot 脚手架</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Dubbo/" rel="tag"># Dubbo</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/20/2017/dubbo-vs-spring-cloud/" rel="next" title="Dubbo 与 Spring Cloud">
+                <i class="fa fa-chevron-left"></i> Dubbo 与 Spring Cloud
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/21/2018/linux-elasticsearch/" rel="prev" title="Linux环境部署Elasticsearch 6.x和常见问题">
+                Linux环境部署Elasticsearch 6.x和常见问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">风中追风</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dubbo-核心功能："><span class="nav-number">1.</span> <span class="nav-text">Dubbo 核心功能：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dubbo-架构："><span class="nav-number">2.</span> <span class="nav-text">Dubbo 架构：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dubbo发展史"><span class="nav-number">3.</span> <span class="nav-text">Dubbo发展史</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#发展到开源"><span class="nav-number">3.1.</span> <span class="nav-text">发展到开源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开源成长"><span class="nav-number">3.2.</span> <span class="nav-text">开源成长</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阿里之外的发展"><span class="nav-number">3.3.</span> <span class="nav-text">阿里之外的发展</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dubbo-Spring-Boot-工程"><span class="nav-number">4.</span> <span class="nav-text">Dubbo Spring Boot 工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于升级新版本Dubbo"><span class="nav-number">5.</span> <span class="nav-text">关于升级新版本Dubbo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于Dubbo的未来"><span class="nav-number">6.</span> <span class="nav-text">关于Dubbo的未来</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">风中追风</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
